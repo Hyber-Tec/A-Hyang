@@ -51,8 +51,8 @@ export const STORY = {
   ] as T[],
 }
 
-export const STATS: { value?: number; decimals?: number; suffix?: string; group?: boolean; text?: T; label: T }[] = [
-  { value: 2012, label: { en: 'Serving Duluth since', ko: '둘루스에서 함께한 시간, 2012년부터' } },
+export const STATS: { value?: number; from?: number; decimals?: number; suffix?: string; text?: T; label: T }[] = [
+  { value: 2012, from: 1990, label: { en: 'Serving Duluth since', ko: '둘루스에서 함께한 시간, 2012년부터' } },
   { value: 4.1, decimals: 1, suffix: '★', label: { en: 'Google rating · 500+ reviews', ko: 'Google 평점 · 리뷰 500개 이상' } },
   { value: 102, label: { en: 'Google reviews that mention our donkatsu', ko: '돈까스를 언급한 Google 리뷰' } },
   { value: 4.8, decimals: 1, suffix: '★', label: { en: 'DoorDash rating', ko: 'DoorDash 평점' } },
@@ -106,6 +106,7 @@ export const SIGNATURES: Signature[] = [
     price: { en: 'Serves 2 from $34.99', ko: '2인분 $34.99부터' },
     image: 'sig-jeongol',
     imageAlt: { en: 'A bubbling Korean hot pot', ko: '보글보글 끓는 전골' },
+    position: '50% 72%',
   },
   {
     id: 'naengmyeon',

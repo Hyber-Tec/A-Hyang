@@ -38,10 +38,10 @@ export function Visit() {
 
         <div className="mt-14 grid gap-10 lg:mt-20 lg:grid-cols-12 lg:gap-14">
           {/* Info */}
-          <div className="space-y-10 lg:col-span-5">
+          <div className="min-w-0 space-y-10 lg:col-span-5">
             <Reveal className="space-y-4">
               <InfoRow icon={<PinIcon className="h-5 w-5" />} title={t({ en: 'Address', ko: '주소' })}>
-                <p className="text-xl font-semibold leading-snug md:text-2xl">
+                <p className="text-[1.2rem] font-semibold leading-snug break-words md:text-2xl">
                   {RESTAURANT.street}
                   <br />
                   {RESTAURANT.city}
@@ -50,19 +50,19 @@ export function Visit() {
                   {t({ en: `Inside ${RESTAURANT.plaza.en} (${RESTAURANT.plaza.ko})`, ko: `${RESTAURANT.plaza.ko} (Nukoa Plaza) 내` })}
                 </p>
               </InfoRow>
-              <div className="flex flex-wrap gap-3 pl-14">
+              <div className="grid gap-3 sm:flex sm:flex-wrap sm:pl-14">
                 <a
                   href={RESTAURANT.directionsUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3.5 font-semibold text-paper transition-transform hover:scale-[1.03] active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-4 font-semibold text-paper transition-transform hover:scale-[1.03] active:scale-95 sm:py-3.5"
                 >
                   <NavigationIcon className="h-4 w-4" />
                   {t({ en: 'Get directions', ko: '길찾기' })}
                 </a>
                 <a
                   href={RESTAURANT.phoneHref}
-                  className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-6 py-3.5 font-semibold transition-colors hover:bg-ink hover:text-paper"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 px-6 py-4 font-semibold transition-colors hover:bg-ink hover:text-paper sm:py-3.5"
                 >
                   <PhoneIcon className="h-4 w-4" />
                   {RESTAURANT.phone}
@@ -71,7 +71,7 @@ export function Visit() {
                   href={RESTAURANT.orderUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-6 py-3.5 font-semibold transition-colors hover:bg-ink hover:text-paper"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 px-6 py-4 font-semibold transition-colors hover:bg-ink hover:text-paper sm:py-3.5"
                 >
                   <BagIcon className="h-4 w-4" />
                   {t({ en: 'Order online', ko: '온라인 주문' })}
@@ -81,19 +81,19 @@ export function Visit() {
 
             <Reveal delay={0.1}>
               <InfoRow icon={<ClockIcon className="h-5 w-5" />} title={t({ en: 'Hours', ko: '영업시간' })}>
-                <table className="mt-1 w-full max-w-md text-[1.05rem]">
+                <table className="mt-1 w-full max-w-md text-[0.98rem] sm:text-[1.05rem]">
                   <tbody>
                     {ORDER.map((d) => {
                       const h = RESTAURANT.hours[d]
                       const isToday = d === today
                       return (
                         <tr key={d} className={`border-b border-ink/10 last:border-0 ${isToday ? 'font-semibold' : ''}`}>
-                          <th scope="row" className="py-2.5 pr-4 text-left font-[inherit]">
-                            <span className="inline-flex items-center gap-2">
+                          <th scope="row" className="py-2.5 pr-3 text-left font-[inherit]">
+                            <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
                               {isToday && <span className="h-1.5 w-1.5 rounded-full bg-leaf-deep" />}
-                              {DAY_NAMES[lang][d]}
+                              <span className="whitespace-nowrap">{DAY_NAMES[lang][d]}</span>
                               {isToday && (
-                                <span className="rounded-full bg-ink px-2 py-0.5 text-[0.7rem] font-semibold tracking-wide text-paper">
+                                <span className="rounded-full bg-ink px-2 py-0.5 text-[0.65rem] font-semibold tracking-wide text-paper">
                                   {t({ en: 'TODAY', ko: '오늘' })}
                                 </span>
                               )}
@@ -107,8 +107,8 @@ export function Visit() {
                     })}
                   </tbody>
                 </table>
-                <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-gold/20 px-4 py-2 text-[0.95rem] font-semibold text-gold-deep">
-                  <UtensilsIcon className="h-4 w-4" />
+                <p className="mt-4 inline-flex items-start gap-2 rounded-2xl bg-gold/20 px-4 py-2.5 text-[0.95rem] leading-snug font-semibold text-gold-deep">
+                  <UtensilsIcon className="mt-0.5 h-4 w-4 shrink-0" />
                   {t(RESTAURANT.lunchSpecial)}
                 </p>
               </InfoRow>
@@ -137,7 +137,7 @@ export function Visit() {
           </div>
 
           {/* Map + storefront */}
-          <Reveal className="relative lg:col-span-7" delay={0.1}>
+          <Reveal className="relative min-w-0 lg:col-span-7" delay={0.1}>
             <div className="relative h-[420px] overflow-hidden rounded-[28px] border border-ink/10 bg-paper-2 shadow-[0_30px_80px_-30px_rgba(18,16,14,0.45)] md:h-[560px]">
               <iframe
                 title={t({ en: 'Map to A-Hyang', ko: '애향 위치 지도' })}
@@ -162,8 +162,8 @@ export function Visit() {
 
 function InfoRow({ icon, title, children }: { icon: ReactNode; title: string; children: ReactNode }) {
   return (
-    <div className="flex gap-4">
-      <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink text-paper">{icon}</div>
+    <div className="flex gap-3 sm:gap-4">
+      <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-ink text-paper sm:h-10 sm:w-10">{icon}</div>
       <div className="min-w-0 flex-1">
         <p className="eyebrow mb-2 text-muted-ink">{title}</p>
         {children}

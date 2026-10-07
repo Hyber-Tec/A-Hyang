@@ -82,7 +82,7 @@ export function Story() {
                   <dt className="sr-only">{t(s.label)}</dt>
                   <dd>
                     <p className="font-display text-[clamp(2.6rem,5vw,3.8rem)] leading-none font-[400] text-paper">
-                      {s.value !== undefined ? <Counter to={s.value} decimals={s.decimals ?? 0} suffix={s.suffix ?? ''} /> : t(s.text!)}
+                      {s.value !== undefined ? <Counter from={s.from} to={s.value} decimals={s.decimals ?? 0} suffix={s.suffix ?? ''} /> : t(s.text!)}
                     </p>
                     <p className="mt-3 text-[0.95rem] text-muted">{t(s.label)}</p>
                   </dd>

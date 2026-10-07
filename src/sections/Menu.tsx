@@ -29,7 +29,10 @@ export function Menu() {
     setActiveId(id)
     // If the reader is already deep in a long list, bring the new category's top into view.
     const top = panelRef.current?.getBoundingClientRect().top ?? 0
-    if (top < 0) scrollTo(window.innerWidth >= 1024 ? '#menu-strips' : '#menu-tabs')
+    if (top < 0) {
+      if (window.innerWidth >= 1024) scrollTo('#menu-strips')
+      else scrollTo('#menu-panel', -150) // clear the nav + sticky tabs
+    }
   }
 
   return (
@@ -67,7 +70,7 @@ export function Menu() {
         </Reveal>
 
         {/* Phones & tablets: sticky pill tabs */}
-        <div id="menu-tabs" className="sticky top-0 z-20 -mx-5 mt-12 bg-paper/90 px-5 py-3 backdrop-blur-md md:-mx-8 md:px-8 lg:hidden">
+        <div id="menu-tabs" style={{ top: 'var(--nav-offset, 0px)' }} className="sticky z-20 -mx-5 mt-12 bg-paper/90 px-5 py-3 backdrop-blur-md transition-[top] duration-500 md:-mx-8 md:px-8 lg:hidden">
           <div role="tablist" aria-label={t({ en: 'Menu categories', ko: '메뉴 분류' })} className="no-scrollbar flex gap-2 overflow-x-auto" data-lenis-prevent>
             {MENU.map((c) => {
               const on = c.id === activeId

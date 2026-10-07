@@ -31,7 +31,7 @@ export function Hero() {
   })
 
   return (
-    <section ref={ref} className="relative h-[100svh] min-h-[640px] overflow-hidden bg-ink" aria-label={t({ en: 'Welcome', ko: '소개' })}>
+    <section ref={ref} className="relative min-h-[100svh] overflow-hidden bg-ink md:h-[100svh] md:min-h-[640px]" aria-label={t({ en: 'Welcome', ko: '소개' })}>
       {/* Photo */}
       <motion.div style={{ y: imgY, scale: imgScale }} className="absolute inset-0 will-change-transform">
         <motion.div
@@ -78,9 +78,9 @@ export function Hero() {
       {/* Copy */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 mx-auto flex h-full max-w-[1400px] flex-col justify-end px-5 pb-8 pt-28 md:px-8 md:pb-12"
+        className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1400px] flex-col justify-end px-5 pt-28 pb-7 md:h-full md:min-h-0 md:px-8 md:pb-12"
       >
-        <motion.p {...fade(0.15)} className="eyebrow mb-6 flex items-center gap-3 text-paper/80">
+        <motion.p {...fade(0.15)} className="eyebrow mb-5 flex items-center gap-3 text-paper/80 md:mb-6">
           <span className="h-px w-8 bg-leaf" />
           {t({ en: 'Korean kitchen · Duluth, GA · Since 2012', ko: '2012년부터 · 조지아 둘루스 한식당' })}
         </motion.p>
@@ -93,8 +93,8 @@ export function Hero() {
           as="h1"
           className={`max-w-[14ch] text-paper ${
             lang === 'ko'
-              ? 'font-batang text-[clamp(2.9rem,8.4vw,8rem)] leading-[1.08] font-bold'
-              : 'font-display text-[clamp(3rem,10.2vw,10.5rem)] leading-[0.9] font-[380]'
+              ? 'font-batang text-[clamp(2.3rem,10.4vw,2.9rem)] leading-[1.08] font-bold sm:text-[clamp(2.9rem,8.4vw,8rem)]'
+              : 'font-display text-[clamp(2.4rem,11.2vw,3rem)] leading-[0.9] font-[380] sm:text-[clamp(3rem,10.2vw,10.5rem)]'
           }`}
           lines={
             lang === 'ko'
@@ -103,39 +103,39 @@ export function Hero() {
           }
         />
 
-        <motion.p {...fade(0.55)} className="mt-7 max-w-xl text-[1.1rem] leading-relaxed text-paper/85 md:text-[1.25rem]">
+        <motion.p {...fade(0.55)} className="mt-5 max-w-xl text-[1.08rem] leading-relaxed text-paper/85 md:mt-7 md:text-[1.25rem]">
           {t({
             en: 'Giant donkatsu fried the moment you order, bubbling hot pots and ice-cold naengmyeon — a family-run Korean kitchen in Nukoa Plaza.',
             ko: '주문 즉시 튀겨내는 왕돈까스, 보글보글 전골, 살얼음 동동 냉면. 뉴코아 플라자에서 2012년부터 정성껏 차려온 가족 한식당입니다.',
           })}
         </motion.p>
 
-        <motion.div {...fade(0.7)} className="mt-9 flex flex-wrap items-center gap-3">
-          <Magnetic>
+        <motion.div {...fade(0.7)} className="mt-7 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center md:mt-9">
+          <Magnetic className="col-span-2 block sm:inline-block">
             <button
               type="button"
               onClick={() => scrollTo('#menu')}
-              className="inline-flex items-center gap-2.5 rounded-full bg-gold px-7 py-4 text-[1.05rem] font-semibold text-ink shadow-[0_10px_30px_-10px_rgba(232,169,74,0.7)] transition-transform hover:scale-[1.03] active:scale-95"
+              className="inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-gold px-7 py-4 sm:w-auto text-[1.05rem] font-semibold text-ink shadow-[0_10px_30px_-10px_rgba(232,169,74,0.7)] transition-transform hover:scale-[1.03] active:scale-95"
             >
               <BookIcon className="h-5 w-5" />
               {t({ en: 'See the menu', ko: '메뉴 보기' })}
             </button>
           </Magnetic>
-          <Magnetic>
+          <Magnetic className="block sm:inline-block">
             <a
               href={RESTAURANT.orderUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-black/25 px-7 py-4 text-[1.05rem] font-semibold text-paper backdrop-blur-md transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/25 bg-black/25 px-3 py-4 whitespace-nowrap sm:w-auto sm:gap-2.5 sm:px-7 text-[1.05rem] font-semibold text-paper backdrop-blur-md transition-colors hover:border-paper hover:bg-paper hover:text-ink"
             >
-              <BagIcon className="h-5 w-5" />
+              <BagIcon className="h-[18px] w-[18px] shrink-0 sm:h-5 sm:w-5" />
               {t({ en: 'Order online', ko: '온라인 주문' })}
             </a>
           </Magnetic>
-          <Magnetic>
+          <Magnetic className="block sm:inline-block">
             <a
               href={RESTAURANT.phoneHref}
-              className="inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-black/25 px-7 py-4 text-[1.05rem] font-semibold text-paper backdrop-blur-md transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/25 bg-black/25 px-3 py-4 whitespace-nowrap sm:w-auto sm:gap-2.5 sm:px-7 text-[1.05rem] font-semibold text-paper backdrop-blur-md transition-colors hover:border-paper hover:bg-paper hover:text-ink"
             >
               <PhoneIcon className="h-5 w-5" />
               {t({ en: 'Call', ko: '전화' })}
@@ -143,14 +143,14 @@ export function Hero() {
           </Magnetic>
         </motion.div>
 
-        <motion.div {...fade(0.85)} className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-white/15 pt-6">
-          <div className="flex flex-wrap items-center gap-3">
+        <motion.div {...fade(0.85)} className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/15 pt-5 md:mt-10 md:pt-6">
+          <div className="flex flex-wrap items-center gap-2.5 md:gap-3">
             <OpenBadge />
             <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/30 px-4 py-2 text-[0.9rem] font-medium text-paper backdrop-blur-md">
               <StarIcon className="h-4 w-4 text-gold" />
               {RATINGS.google.score.toFixed(1)}
               <span className="text-paper/65">
-                · Google {t({ en: `(${RATINGS.google.countLabel} reviews)`, ko: `(리뷰 ${RATINGS.google.countLabel}개)` })}
+                · Google <span className="hidden min-[430px]:inline">{t({ en: `(${RATINGS.google.countLabel} reviews)`, ko: `(리뷰 ${RATINGS.google.countLabel}개)` })}</span>
               </span>
             </span>
           </div>

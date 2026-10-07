@@ -8,7 +8,7 @@ import { SectionLabel } from '../components/SectionLabel'
 
 /* Positions of the six satellite photos around the centre one (vw/vh offsets + size). */
 const LAYOUT = [
-  'h-[24vh] w-[46vw] md:h-[25vh] md:w-[25vw]', // centre
+  'h-[27vh] w-[46vw] md:h-[25vh] md:w-[25vw]', // centre
   '-top-[29vh] left-[6vw] h-[22vh] w-[38vw] md:-top-[30vh] md:left-[5vw] md:h-[30vh] md:w-[35vw]',
   '-top-[6vh] -left-[33vw] h-[30vh] w-[26vw] md:-top-[10vh] md:-left-[25vw] md:h-[45vh] md:w-[20vw]',
   'left-[33vw] h-[22vh] w-[26vw] md:left-[27.5vw] md:h-[25vh] md:w-[25vw]',
@@ -30,7 +30,7 @@ export function Gallery() {
   const scales: MotionValue<number>[] = [s4, s5, s6, s5, s6, s8, s9]
   const captionOpacity = useTransform(scrollYProgress, [0.72, 0.92], [0, 1])
   const captionY = useTransform(scrollYProgress, [0.72, 0.95], [40, 0])
-  const veil = useTransform(scrollYProgress, [0.7, 0.95], [0, 0.45])
+  const veil = useTransform(scrollYProgress, [0.7, 0.95], [0, 0.62])
 
   return (
     <section id="gallery" className="relative bg-ink">
@@ -57,7 +57,7 @@ export function Gallery() {
             </motion.div>
           ))}
           <motion.div style={{ opacity: veil }} className="pointer-events-none absolute inset-0 bg-ink" />
-          <motion.div style={{ opacity: captionOpacity, y: captionY }} className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+          <motion.div style={{ opacity: captionOpacity, y: captionY }} className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-6 text-center [text-shadow:0_2px_24px_rgba(0,0,0,0.65)]">
             <p className="eyebrow text-paper/80">{t({ en: 'Made to order', ko: '주문 즉시 조리' })}</p>
             <p className={`mt-4 max-w-[16ch] text-paper ${lang === 'ko' ? 'font-batang text-[clamp(2.2rem,6vw,5rem)] leading-[1.2] font-bold' : 'font-display text-[clamp(2.4rem,6.5vw,5.6rem)] leading-[1] font-[380]'}`}>
               {lang === 'ko' ? '정성은 기본, 양은 넉넉하게.' : <>Generous plates, <span className="italic text-gold">made with care.</span></>}

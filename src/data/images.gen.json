@@ -28,18 +28,18 @@
   "signature": "768485:1791388603531.6492:{}"
  },
  "cat-jeongol": {
-  "w": 2400,
+  "w": 1968,
   "h": 1602,
   "widths": [
    480,
    800,
    1200,
    1600,
-   2400
+   1968
   ],
-  "lqip": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAABQBACdASoYABAAPu1krU6ppaSiMAgBMB2JagCsACPpZrpzmFVHQrpynQOgAP4nSsNIIUDseKUWAVquIWJWLjG8Kbr3o8I0PUkpAdAqxl89ys4sghtmN+igTLbD9qM0spgA244quJAAAA==",
+  "lqip": "data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAADwBACdASoYABQAPu1qr1CppaQiqAqpMB2JaACdAA0atihH8BAd1XH/sPq3jY+LOAAA/ukd5cT4NOsumKUB3cObTwLbVn9rrL5HhhUkVL9Y7/MQMLaTqirXOBPacNniEsYzTCW0aOV1jcTEpMi2r01I6RH/s84mPwQbKgxgFhxvUMp6oxpKloQIAAA=",
   "color": "rgb(8,8,8)",
-  "signature": "877399:1791388603523.4314:{}"
+  "signature": "877399:1791388603523.4314:{\"crop\":{\"x\":0.18,\"y\":0,\"w\":0.82,\"h\":1}}"
  },
  "cat-katsu": {
   "w": 2400,

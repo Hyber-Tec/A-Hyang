@@ -7,11 +7,11 @@ const NAV_OFFSET = -72
 export function useScrollTo() {
   const lenis = useLenis()
   return useCallback(
-    (hash: string) => {
+    (hash: string, offset = NAV_OFFSET) => {
       const el = document.querySelector(hash)
       if (!el) return
-      if (lenis) lenis.scrollTo(el as HTMLElement, { offset: NAV_OFFSET, duration: 1.4 })
-      else el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      if (lenis) lenis.scrollTo(el as HTMLElement, { offset, duration: 1.4 })
+      else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + offset, behavior: 'smooth' })
       history.replaceState(null, '', hash)
     },
     [lenis],

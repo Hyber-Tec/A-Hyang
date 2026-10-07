@@ -3,7 +3,8 @@ import { PRESS, REVIEWS, RATINGS, type Review } from '../data/content'
 import { useLang, useT, type Lang } from '../lib/i18n'
 import { MaskText, Reveal } from '../components/motion'
 import { SectionLabel } from '../components/SectionLabel'
-import { QuoteIcon, StarIcon } from '../components/icons'
+import { ArrowRight, QuoteIcon, StarIcon } from '../components/icons'
+import { useMediaQuery } from '../lib/useMediaQuery'
 
 function Stars({ value, className = 'h-4 w-4' }: { value: number; className?: string }) {
   return (
@@ -66,12 +67,32 @@ function Row({ items, lang, reverse = false, duration = 70 }: { items: Review[];
   )
 }
 
+function SwipeRow({ items, lang }: { items: Review[]; lang: Lang }) {
+  return (
+    <div>
+      <div className="no-scrollbar flex snap-x snap-mandatory items-start gap-4 overflow-x-auto scroll-px-5 px-5 pb-2">
+        {items.map((r, i) => (
+          <div key={i} className="snap-start">
+            <ReviewCard r={r} lang={lang} />
+          </div>
+        ))}
+        <div className="w-1 shrink-0" aria-hidden="true" />
+      </div>
+      <p className="mt-4 flex items-center gap-2 px-5 text-[0.9rem] text-muted" aria-hidden="true">
+        {lang === 'ko' ? '옆으로 넘겨 더 보기' : 'Swipe for more'}
+        <ArrowRight className="h-4 w-4" />
+      </p>
+    </div>
+  )
+}
+
 export function Reviews() {
   const t = useT()
   const { lang } = useLang()
   // Korean readers see the Korean-language reviews first.
   const ordered = useMemo(() => (lang === 'ko' ? [...REVIEWS.filter((r) => r.lang === 'ko'), ...REVIEWS.filter((r) => r.lang === 'en')] : REVIEWS), [lang])
   const half = Math.ceil(ordered.length / 2)
+  const touch = useMediaQuery('(hover: none), (max-width: 767px)')
 
   return (
     <section id="reviews" className="relative overflow-hidden bg-ink py-24 md:py-36">
@@ -123,10 +144,16 @@ export function Reviews() {
         </Reveal>
       </div>
 
-      <div className="mt-16 space-y-5 md:mt-20" key={lang}>
-        <Row items={ordered.slice(0, half)} lang={lang} duration={95} />
-        <Row items={ordered.slice(half)} lang={lang} reverse duration={105} />
-      </div>
+      {touch ? (
+        <div className="mt-12" key={lang}>
+          <SwipeRow items={ordered} lang={lang} />
+        </div>
+      ) : (
+        <div className="mt-16 space-y-5 md:mt-20" key={lang}>
+          <Row items={ordered.slice(0, half)} lang={lang} duration={95} />
+          <Row items={ordered.slice(half)} lang={lang} reverse duration={105} />
+        </div>
+      )}
       <p className="mx-auto mt-8 max-w-[1400px] px-5 text-[0.9rem] text-muted md:px-8">
         {t({
           en: 'Real reviews from Google, Yelp, DoorDash and Reddit, quoted as written.',

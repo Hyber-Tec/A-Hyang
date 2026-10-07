@@ -163,7 +163,7 @@ export function Magnetic({ children, strength = 0.28, className = '' }: { childr
   return (
     <motion.div
       ref={ref}
-      className={`inline-block ${className}`}
+      className={className || 'inline-block'}
       style={{ x, y }}
       onPointerMove={(e) => {
         if (e.pointerType !== 'mouse' || !ref.current) return
@@ -184,15 +184,15 @@ export function Magnetic({ children, strength = 0.28, className = '' }: { childr
 /* ----------------------------------------------------------------- Counter */
 
 /** Counts up to `to` once visible. */
-export function Counter({ to, decimals = 0, suffix = '', className }: { to: number; decimals?: number; suffix?: string; className?: string }) {
+export function Counter({ to, from = 0, decimals = 0, suffix = '', className }: { to: number; from?: number; decimals?: number; suffix?: string; className?: string }) {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, amount: 0.6 })
-  const [val, setVal] = useState(0)
+  const [val, setVal] = useState(from)
   useEffect(() => {
     if (!inView) return
-    const controls = animate(0, to, { duration: 1.8, ease: EASE_OUT, onUpdate: setVal })
+    const controls = animate(from, to, { duration: 1.8, ease: EASE_OUT, onUpdate: setVal })
     return () => controls.stop()
-  }, [inView, to])
+  }, [inView, from, to])
   return (
     <span ref={ref} className={className}>
       {val.toFixed(decimals)}

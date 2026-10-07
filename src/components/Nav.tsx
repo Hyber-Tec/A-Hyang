@@ -23,12 +23,13 @@ export function LangToggle({ className = '' }: { className?: string }) {
           type="button"
           onClick={() => setLang(l)}
           aria-pressed={lang === l}
-          className={`relative z-10 min-w-11 rounded-full px-3 py-1.5 transition-colors duration-300 ${lang === l ? 'text-ink' : 'text-paper/75 hover:text-paper'}`}
+          className={`relative z-10 min-h-9 min-w-10 rounded-full px-3 py-1.5 transition-colors duration-300 ${lang === l ? 'text-ink' : 'text-paper/75 hover:text-paper'}`}
         >
           {lang === l && (
             <motion.span layoutId="lang-pill" className="absolute inset-0 -z-10 rounded-full bg-paper" transition={{ type: 'spring', stiffness: 400, damping: 32 }} />
           )}
-          {l === 'en' ? 'EN' : '한국어'}
+          <span className="sm:hidden">{l === 'en' ? 'EN' : '한'}</span>
+          <span className="hidden sm:inline">{l === 'en' ? 'EN' : '한국어'}</span>
         </button>
       ))}
     </div>
@@ -54,6 +55,10 @@ export function Nav() {
   })
 
   useEffect(() => {
+    document.documentElement.style.setProperty('--nav-offset', hidden ? '0px' : solid ? '64px' : '72px')
+  }, [hidden, solid])
+
+  useEffect(() => {
     if (open) lenis?.stop()
     else lenis?.start()
     document.body.style.overflow = open ? 'hidden' : ''
@@ -70,7 +75,7 @@ export function Nav() {
         initial={{ y: -100 }}
         animate={{ y: hidden ? -100 : 0 }}
         transition={{ duration: 0.5, ease: EASE_OUT }}
-        className="fixed inset-x-0 top-0 z-50 lg:px-4"
+        className="fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)] lg:px-4"
       >
         <div
           className={`mx-auto border transition-[max-width,margin,background-color,border-color,border-radius,box-shadow] duration-700 ease-[var(--ease-out-expo)] ${
@@ -119,7 +124,7 @@ export function Nav() {
             </ul>
 
             <div className="flex items-center gap-2 md:gap-3">
-              <LangToggle className="hidden sm:flex" />
+              <LangToggle />
               <a
                 href={RESTAURANT.phoneHref}
                 className="hidden items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-[0.95rem] font-semibold text-ink transition-transform duration-300 hover:scale-[1.03] active:scale-95 md:inline-flex"
@@ -180,7 +185,6 @@ export function Nav() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
             >
-              <LangToggle className="w-fit sm:hidden" />
               <p className="text-muted">
                 <span className={`mr-2 inline-block h-2 w-2 rounded-full ${status.open ? 'bg-leaf' : 'bg-chili'}`} />
                 {status.open

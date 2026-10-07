@@ -52,9 +52,11 @@
   @media (min-width: 768px) {
     html { font-size: 18px; }
   }
-  html:lang(ko) {
+  /* Korean must wrap between words, never inside one — applies in both languages since the
+     English page also shows Hangul. keep-all doesn't change how Latin text wraps. */
+  html {
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
   }
   body {
     min-height: 100dvh;
@@ -99,7 +101,8 @@
   &::-webkit-scrollbar { display: none; }
 }
 
-/* Film grain overlay — a single static noise tile, very cheap to composite. */
+/* Film grain overlay — a single static noise tile, very cheap to composite. Skipped on touch
+   devices, where a full-screen fixed layer costs scroll smoothness on older phones. */
 .grain::after {
   content: "";
   position: fixed;
@@ -108,6 +111,9 @@
   pointer-events: none;
   opacity: 0.07;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+@media (pointer: coarse) {
+  .grain::after { display: none; }
 }
 
 /* Lenis */
