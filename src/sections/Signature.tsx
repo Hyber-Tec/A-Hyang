@@ -29,7 +29,7 @@ export function Signature() {
             <p className="max-w-sm text-[1.05rem] leading-relaxed text-paper/75">
               {t({
                 en: 'Four dishes our regulars order again and again. Start here — then explore the full menu below.',
-                ko: '단골손님들이 몇 번이고 다시 주문하는 네 가지. 여기서 시작해 아래 전체 메뉴도 둘러보세요.',
+                ko: '단골손님들이 몇 번이고 다시 찾는 메뉴 네 가지. 애향이 처음이시라면 여기서부터 시작해 보세요.',
               })}
             </p>
           </Reveal>

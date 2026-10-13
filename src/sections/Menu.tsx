@@ -14,8 +14,8 @@ const TAGS: Record<Tag, { label: T; className: string; icon?: 'flame' | 'star' |
   special: { label: { en: 'A-Hyang Special', ko: '애향 스페셜' }, className: 'bg-gold text-ink', icon: 'star' },
   new: { label: { en: 'New', ko: '신메뉴' }, className: 'bg-chili-deep text-white' },
   spicy: { label: { en: 'Spicy', ko: '매운맛' }, className: 'bg-chili/12 text-chili', icon: 'flame' },
-  share: { label: { en: 'For sharing', ko: '여럿이 함께' }, className: 'bg-leaf-deep/12 text-leaf-deep', icon: 'users' },
-  cold: { label: { en: 'Served cold', ko: '시원하게' }, className: 'bg-sky-700/10 text-sky-800' },
+  share: { label: { en: 'For sharing', ko: '나눠 먹기 좋아요' }, className: 'bg-leaf-deep/12 text-leaf-deep', icon: 'users' },
+  cold: { label: { en: 'Served cold', ko: '시원한 메뉴' }, className: 'bg-sky-700/10 text-sky-800' },
   veg: { label: { en: 'Vegetarian', ko: '채식' }, className: 'bg-leaf/30 text-leaf-deep' },
 }
 
@@ -68,7 +68,7 @@ export function Menu() {
               className={`mt-6 ${lang === 'ko' ? 'font-batang text-[clamp(2.6rem,6.5vw,5.6rem)] leading-[1.1] font-bold' : 'font-display text-[clamp(2.8rem,7.5vw,7rem)] leading-[0.92] font-[400]'}`}
               lines={
                 lang === 'ko'
-                  ? ['오늘은', <>뭘 <span className="text-gold-deep">먹을까요?</span></>]
+                  ? ['오늘은', <>뭐 <span className="text-gold-deep">드실래요?</span></>]
                   : ['What are you', <span className="italic text-gold-deep">craving today?</span>]
               }
             />
@@ -248,8 +248,9 @@ function MenuRow({ item }: { item: MenuItem }) {
         <h4 className={`text-[1.3rem] leading-snug font-bold md:text-[1.4rem] ${lang === 'ko' ? 'font-batang' : 'font-display font-[560]'}`}>{primary}</h4>
         <span className="mb-1.5 h-px min-w-6 flex-1 self-end border-b border-dotted border-ink/30" aria-hidden="true" />
         <span className="font-display text-[1.3rem] font-[560] whitespace-nowrap tabular-nums md:text-[1.4rem]">
-          {item.sizes && <span className="mr-1.5 font-sans text-[0.8rem] font-semibold text-ink/50">{t({ en: 'from', ko: '부터' })}</span>}
+          {item.sizes && lang === 'en' && <span className="mr-1.5 font-sans text-[0.8rem] font-semibold text-ink/50">from</span>}
           {item.price}
+          {item.sizes && lang === 'ko' && <span className="ml-0.5 font-sans text-[0.8rem] font-semibold text-ink/50">부터</span>}
         </span>
       </div>
       <p className={`mt-0.5 text-[0.98rem] text-ink/55 ${lang === 'ko' ? 'font-display italic' : 'font-batang'}`}>{secondary}</p>

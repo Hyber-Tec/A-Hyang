@@ -47,7 +47,7 @@ export function Footer() {
             className="font-display text-[clamp(3rem,9vw,8.5rem)] leading-[0.92] font-[380]"
             lines={
               lang === 'ko'
-                ? ['출출하신가요?', <span className="text-gold">애향으로 오세요.</span>]
+                ? ['출출하시죠?', <span className="text-gold">애향으로 오세요.</span>]
                 : ['Hungry yet?', <span className="italic text-gold">Come on in.</span>]
             }
           />
@@ -82,7 +82,7 @@ export function Footer() {
             <p className="mt-4 max-w-xs leading-relaxed text-paper/80">
               {t({
                 en: 'A family-run Korean kitchen in Nukoa Plaza, Duluth — King-size donkatsu, cold noodles and bubbling stews.',
-                ko: '둘루스 뉴코아 플라자의 가족 한식당. 왕돈까스, 시원한 냉면, 보글보글 끓는 뚝배기.',
+                ko: '둘루스 뉴코아 플라자의 한식당, 애향. 왕돈까스와 시원한 냉면, 보글보글 끓는 뚝배기까지.',
               })}
             </p>
           </div>
@@ -145,7 +145,7 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-2 px-5 py-6 pb-28 text-[0.85rem] text-muted md:flex-row md:justify-between md:px-8 md:pb-6">
           <p>© {new Date().getFullYear()} 애향 A-Hyang · Duluth, GA</p>
-          <p>{t({ en: 'Menu, prices and hours may change — please call to confirm.', ko: '메뉴·가격·영업시간은 변동될 수 있습니다. 방문 전 전화로 확인해 주세요.' })}</p>
+          <p>{t({ en: 'Menu, prices and hours may change — please call to confirm.', ko: '메뉴·가격·영업시간은 바뀔 수 있으니, 방문 전 전화로 확인해 주세요.' })}</p>
         </div>
       </div>
     </footer>

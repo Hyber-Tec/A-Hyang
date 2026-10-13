@@ -41,7 +41,7 @@ export function Gallery() {
           className={`mt-6 ${lang === 'ko' ? 'font-batang text-[clamp(2.4rem,6vw,5.4rem)] leading-[1.12] font-bold' : 'font-display text-[clamp(2.7rem,7vw,6.6rem)] leading-[0.95] font-[380]'}`}
           lines={
             lang === 'ko'
-              ? ['보기만 해도', <span className="text-gold">군침이 도는.</span>]
+              ? ['보기만 해도', <span className="text-gold">군침이 돌죠?</span>]
               : ['Best enjoyed', <span className="italic text-gold">hot off the stove.</span>]
           }
         />

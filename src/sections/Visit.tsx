@@ -26,7 +26,7 @@ export function Visit() {
               className="mt-6 font-display text-[clamp(2.8rem,7vw,6.5rem)] leading-[0.95] font-[420]"
               lines={
                 lang === 'ko'
-                  ? ['배고픈 날,', <span className="text-leaf-deep">애향으로 오세요.</span>]
+                  ? ['배고프게 오셔서,', <span className="text-leaf-deep">배부르게 가세요.</span>]
                   : ['Come hungry.', <span className="italic text-leaf-deep">Leave happy.</span>]
               }
             />
@@ -47,7 +47,7 @@ export function Visit() {
                   {RESTAURANT.city}
                 </p>
                 <p className="mt-1 text-muted-ink">
-                  {t({ en: `Inside ${RESTAURANT.plaza.en} (${RESTAURANT.plaza.ko})`, ko: `${RESTAURANT.plaza.ko} (Nukoa Plaza) 내` })}
+                  {t({ en: `Inside ${RESTAURANT.plaza.en} (${RESTAURANT.plaza.ko})`, ko: `${RESTAURANT.plaza.ko}(Nukoa Plaza) 안에 있습니다.` })}
                 </p>
               </InfoRow>
               <div className="grid gap-3 sm:flex sm:flex-wrap sm:pl-14">
@@ -119,7 +119,7 @@ export function Visit() {
                 <p className="text-[1.05rem] leading-relaxed text-ink/80">
                   {t({
                     en: 'Free parking in the Nukoa Plaza lot — usually plenty of spaces. Reservations welcome; call ahead for groups.',
-                    ko: '뉴코아 플라자 주차장 무료 이용 (대부분 여유 있습니다). 예약 가능하며, 단체 손님은 미리 전화 주세요.',
+                    ko: '뉴코아 플라자 주차장을 무료로 이용하실 수 있고, 자리도 대체로 넉넉합니다. 예약도 가능하니 단체 손님은 미리 전화 주세요.',
                   })}
                 </p>
               </InfoRow>
@@ -150,7 +150,7 @@ export function Visit() {
             <figure className="absolute -bottom-10 left-4 w-[58%] max-w-[320px] rotate-[-2.5deg] rounded-2xl bg-cream p-2.5 pb-3 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.55)] md:-left-8 md:w-[46%]">
               <Img name="storefront" alt={t({ en: 'The A-Hyang storefront with its green sign', ko: '초록색 간판의 애향 외관' })} sizes="320px" className="aspect-[4/3] rounded-xl" />
               <figcaption className="mt-2.5 px-1 text-[0.85rem] font-semibold text-ink/80">
-                {t({ en: 'Look for the green sign ↑', ko: '초록색 간판을 찾아주세요 ↑' })}
+                {t({ en: 'Look for the green sign ↑', ko: '초록색 간판을 찾아 주세요 ↑' })}
               </figcaption>
             </figure>
           </Reveal>

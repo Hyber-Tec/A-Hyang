@@ -5,7 +5,8 @@ import { Logo } from './Logo'
 import { NAV, RESTAURANT } from '../data/restaurant'
 import { useLang, useT } from '../lib/i18n'
 import { useScrollTo } from '../lib/scroll'
-import { formatTime, useOpenStatus } from '../lib/hours'
+import { useOpenStatus } from '../lib/hours'
+import { openLabel } from './OpenBadge'
 import { EASE_OUT } from './motion'
 import { BagIcon, PhoneIcon } from './icons'
 
@@ -45,7 +46,7 @@ export function Nav() {
   const [hidden, setHidden] = useState(false)
   const [solid, setSolid] = useState(false)
   const [open, setOpen] = useState(false)
-  const { status } = useOpenStatus(RESTAURANT.hours)
+  const { status, today } = useOpenStatus(RESTAURANT.hours)
 
   useMotionValueEvent(scrollY, 'change', (y) => {
     const prev = scrollY.getPrevious() ?? 0
@@ -187,11 +188,7 @@ export function Nav() {
             >
               <p className="text-muted">
                 <span className={`mr-2 inline-block h-2 w-2 rounded-full ${status.open ? 'bg-leaf' : 'bg-chili'}`} />
-                {status.open
-                  ? `${lang === 'ko' ? '영업 중' : 'Open now'} · ${lang === 'ko' ? `${formatTime(status.closesAt, lang)}까지` : `until ${formatTime(status.closesAt, lang)}`}`
-                  : lang === 'ko'
-                    ? '영업 준비 중'
-                    : 'Closed now'}
+                {openLabel(status, today, lang)}
               </p>
               <a href={RESTAURANT.phoneHref} className="flex items-center justify-center gap-3 rounded-full bg-gold py-4 text-lg font-semibold text-ink">
                 <PhoneIcon className="h-5 w-5" /> {RESTAURANT.phone}

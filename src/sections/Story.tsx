@@ -36,7 +36,7 @@ export function Story() {
   return (
     <section id="story" ref={ref} className="relative overflow-hidden bg-ink">
       <div className="mx-auto max-w-[1400px] px-5 py-24 md:px-8 md:py-40">
-        <SectionLabel index="01">{t({ en: 'Our place', ko: '애향 이야기' })}</SectionLabel>
+        <SectionLabel index="01">{t({ en: 'Our place', ko: '애향 소개' })}</SectionLabel>
 
         <ScrollTextReveal
           key={lang}

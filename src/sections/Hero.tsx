@@ -98,7 +98,7 @@ export function Hero() {
           }`}
           lines={
             lang === 'ko'
-              ? ['겉은 바삭하게,', <>속은 <span className="text-gold">따뜻하게.</span></>]
+              ? ['겉은 바삭하게,', <>속은 <span className="text-gold">촉촉하게.</span></>]
               : ['Crispy outside.', <><span className="italic text-gold">Warm</span> inside.</>]
           }
         />
@@ -106,7 +106,7 @@ export function Hero() {
         <motion.p {...fade(0.55)} className="mt-5 max-w-xl text-[1.08rem] leading-relaxed text-paper/85 md:mt-7 md:text-[1.25rem]">
           {t({
             en: 'King-size donkatsu, bubbling stews and ice-cold naengmyeon — a family-run Korean kitchen in Nukoa Plaza, Duluth.',
-            ko: '큼직한 왕돈까스, 보글보글 끓는 뚝배기, 시원한 냉면. 둘루스 뉴코아 플라자의 가족 한식당입니다.',
+            ko: '큼직한 왕돈까스에 시원한 냉면, 보글보글 끓는 뚝배기까지. 둘루스 뉴코아 플라자에서 가족이 함께 꾸려 가는 한식당입니다.',
           })}
         </motion.p>
 
@@ -150,7 +150,7 @@ export function Hero() {
               <StarIcon className="h-4 w-4 text-gold" />
               {RATINGS.google.score.toFixed(1)}
               <span className="text-paper/65">
-                · Google <span className="hidden min-[430px]:inline">{t({ en: `(${RATINGS.google.countLabel} reviews)`, ko: `(리뷰 ${RATINGS.google.countLabel}개)` })}</span>
+                · Google <span className="hidden min-[430px]:inline">{t({ en: `(${RATINGS.google.countLabel} reviews)`, ko: `(리뷰 ${RATINGS.google.countLabel.replace('+', '')}개 이상)` })}</span>
               </span>
             </span>
           </div>

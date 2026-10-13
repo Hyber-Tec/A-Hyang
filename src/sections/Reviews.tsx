@@ -79,7 +79,7 @@ function SwipeRow({ items, lang }: { items: Review[]; lang: Lang }) {
         <div className="w-1 shrink-0" aria-hidden="true" />
       </div>
       <p className="mt-4 flex items-center gap-2 px-5 text-[0.9rem] text-muted" aria-hidden="true">
-        {lang === 'ko' ? '옆으로 넘겨 더 보기' : 'Swipe for more'}
+        {lang === 'ko' ? '옆으로 밀어서 더 보기' : 'Swipe for more'}
         <ArrowRight className="h-4 w-4" />
       </p>
     </div>
@@ -113,7 +113,7 @@ export function Reviews() {
                 <div className="pb-1.5">
                   <Stars value={RATINGS.google.score} className="h-5 w-5" />
                   <p className="mt-1.5 text-[0.95rem] text-muted">
-                    {t({ en: `Google · ${RATINGS.google.countLabel} reviews`, ko: `Google 리뷰 ${RATINGS.google.countLabel}개` })}
+                    {t({ en: `Google · ${RATINGS.google.countLabel} reviews`, ko: `Google 리뷰 ${RATINGS.google.countLabel.replace('+', '')}개 이상` })}
                   </p>
                 </div>
               </div>
