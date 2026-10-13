@@ -8,7 +8,7 @@ import { SectionLabel } from '../components/SectionLabel'
 
 export function DishTicker() {
   return (
-    <div className="relative z-10 border-y border-ink/10 bg-paper py-5 text-ink md:py-7" aria-label="돈까스, 전골, 냉면, 감자탕, 부대찌개">
+    <div className="relative z-10 border-y border-ink/10 bg-paper py-5 text-ink md:py-7" aria-label={TICKER.map((d) => d.ko).join(', ')}>
       <VelocityMarquee baseVelocity={-1.6}>
         {TICKER.map((d) => (
           <span key={d.ko} className="flex items-center">
@@ -31,6 +31,7 @@ export function Story() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
   const yA = useTransform(scrollYProgress, [0, 1], ['12%', '-14%'])
   const yB = useTransform(scrollYProgress, [0, 1], ['30%', '-30%'])
+  const quote = STORY.quote[lang]
 
   return (
     <section id="story" ref={ref} className="relative overflow-hidden bg-ink">
@@ -70,10 +71,17 @@ export function Story() {
             <Reveal delay={0.1}>
               <figure className="mt-10 border-l-2 border-leaf pl-6">
                 <blockquote>
-                  <p className="font-batang text-[1.55rem] leading-snug font-bold text-paper md:text-[1.75rem]">{STORY.promise.ko}</p>
-                  {lang === 'en' && <p className="mt-2 font-display text-[1.2rem] italic text-paper/75">“{STORY.promise.en}”</p>}
+                  <p
+                    className={`leading-snug text-paper ${
+                      lang === 'ko' ? 'font-batang text-[1.55rem] font-bold md:text-[1.75rem]' : 'font-display text-[1.45rem] italic md:text-[1.6rem]'
+                    }`}
+                  >
+                    “{quote.text}”
+                  </p>
                 </blockquote>
-                <figcaption className="eyebrow mt-4 text-[0.72rem] text-leaf">{t(STORY.promise.caption)}</figcaption>
+                <figcaption className="eyebrow mt-4 text-[0.72rem] text-leaf">
+                  — {quote.author} · {t({ en: `${quote.source} review, ${quote.date}`, ko: `${quote.source} 리뷰, ${quote.date}` })}
+                </figcaption>
               </figure>
             </Reveal>
             <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 border-t border-white/10 pt-10">

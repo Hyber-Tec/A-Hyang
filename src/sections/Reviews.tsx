@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { PRESS, REVIEWS, RATINGS, type Review } from '../data/content'
+import { FEATURED, REVIEWS, RATINGS, type Review } from '../data/content'
 import { useLang, useT, type Lang } from '../lib/i18n'
 import { MaskText, Reveal } from '../components/motion'
 import { SectionLabel } from '../components/SectionLabel'
@@ -131,15 +131,15 @@ export function Reviews() {
           </Reveal>
         </div>
 
-        {/* Press */}
+        {/* Featured review */}
         <Reveal className="mt-16 md:mt-24">
           <figure className="relative mx-auto max-w-5xl border-y border-white/10 py-10 text-center md:py-14">
             <QuoteIcon className="mx-auto h-9 w-9 text-gold/70" />
             <blockquote className="mx-auto mt-6 max-w-4xl">
-              <p className="font-batang text-[clamp(1.5rem,3.2vw,2.5rem)] leading-[1.45] font-bold text-paper">{PRESS.quote.ko}</p>
-              {lang === 'en' && <p className="mt-4 font-display text-[clamp(1.15rem,2vw,1.5rem)] italic text-paper/70">{PRESS.quote.en}</p>}
+              <p className="font-batang text-[clamp(1.5rem,3.2vw,2.5rem)] leading-[1.45] font-bold text-paper">“{FEATURED.text}”</p>
+              {lang === 'en' && <p className="mt-4 font-display text-[clamp(1.15rem,2vw,1.5rem)] italic text-paper/70">{FEATURED.translation}</p>}
             </blockquote>
-            <figcaption className="eyebrow mt-7 text-gold">— {t(PRESS.source)}</figcaption>
+            <figcaption className="eyebrow mt-7 text-gold">— {t(FEATURED.source)}</figcaption>
           </figure>
         </Reveal>
       </div>
@@ -156,8 +156,8 @@ export function Reviews() {
       )}
       <p className="mx-auto mt-8 max-w-[1400px] px-5 text-[0.9rem] text-muted md:px-8">
         {t({
-          en: 'Real reviews from Google, Yelp, DoorDash and Reddit, quoted as written.',
-          ko: '* Google, Yelp, DoorDash, Reddit의 실제 리뷰를 원문 그대로 옮겼습니다.',
+          en: 'Real reviews from Google, Yelp, DoorDash, Reddit and Atlanta TalkTalk, quoted as written.',
+          ko: '* Google, Yelp, DoorDash, Reddit, 아틀란타 톡톡의 실제 리뷰를 원문 그대로 옮겼습니다.',
         })}
       </p>
     </section>

@@ -36,10 +36,12 @@ Every visible string has an English and a Korean version (`{ en: '…', ko: '…
 ## Before launch (once the owner approves)
 
 1. Replace representative stock photography with the restaurant's own food photos (same file names in `assets-src/images/`).
-2. Confirm menu prices and hours with the owner.
-3. Remove `<meta name="robots" content="noindex, nofollow">` from `index.html` so Google can index the site.
-4. Optionally connect a custom domain in Firebase Hosting.
+2. Confirm hours with the owner: the October 2026 in-store menu says Tue–Sun 11 AM – 10 PM, while Yelp showed 9:30 PM in July 2026.
+3. Menu and prices come from the in-store menu photographed in October 2026. The soft-drink price was partly cut off in the photo ($1.50 assumed), and two drink lines were blacked out on the menu itself.
+4. The site makes no claims about the restaurant's history or kitchen routines. If the owner wants a story section (when they opened here, how dishes are made), get it from them first.
+5. Remove `<meta name="robots" content="noindex, nofollow">` from `index.html` so Google can index the site.
+6. Optionally connect a custom domain in Firebase Hosting.
 
 ## Photo credits
 
-Representative food photography from Unsplash (Unsplash License) — see `assets-src/images/CREDITS.md`.
+Representative food photography is free stock (Unsplash, Pexels and Pixabay licenses) standing in until the restaurant's own photos arrive. The storefront photo is a screenshot supplied for the demo and should be replaced too.

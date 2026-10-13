@@ -82,7 +82,7 @@ export function Hero() {
       >
         <motion.p {...fade(0.15)} className="eyebrow mb-5 flex items-center gap-3 text-paper/80 md:mb-6">
           <span className="h-px w-8 bg-leaf" />
-          {t({ en: 'Korean kitchen · Duluth, GA · Since 2012', ko: '2012년부터 · 조지아 둘루스 한식당' })}
+          {t({ en: 'Korean cuisine · Donkatsu · Cold noodles', ko: '한식 · 돈까스 · 냉면 · 조지아 둘루스' })}
         </motion.p>
 
         <MaskText
@@ -105,8 +105,8 @@ export function Hero() {
 
         <motion.p {...fade(0.55)} className="mt-5 max-w-xl text-[1.08rem] leading-relaxed text-paper/85 md:mt-7 md:text-[1.25rem]">
           {t({
-            en: 'Giant donkatsu fried the moment you order, bubbling hot pots and ice-cold naengmyeon — a family-run Korean kitchen in Nukoa Plaza.',
-            ko: '주문 즉시 튀겨내는 왕돈까스, 보글보글 전골, 살얼음 동동 냉면. 뉴코아 플라자에서 2012년부터 정성껏 차려온 가족 한식당입니다.',
+            en: 'King-size donkatsu, bubbling stews and ice-cold naengmyeon — a family-run Korean kitchen in Nukoa Plaza, Duluth.',
+            ko: '큼직한 왕돈까스, 보글보글 끓는 뚝배기, 시원한 냉면. 둘루스 뉴코아 플라자의 가족 한식당입니다.',
           })}
         </motion.p>
 

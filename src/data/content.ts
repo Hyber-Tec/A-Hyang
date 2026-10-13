@@ -2,9 +2,11 @@ import type { T } from '../lib/i18n'
 import type { ImageName } from '../components/Img'
 
 /*
- * Content sources (researched Oct 2026): in-store menu photographed Jul 2026 and the printed menu used 2024–25,
- * Google / Yelp / DoorDash reviews (verbatim), owner replies on Google, and the restaurant's 2012 directory listing.
- * Prices marked "printed 2024–25" were not visible on the 2026 menu photo — confirm with the owner.
+ * Content sources: the in-store menu photographed in October 2026 (every dish, price, the lunch special and the
+ * hours), Google / Yelp / DoorDash / Reddit / Atlanta TalkTalk reviews quoted verbatim, and Google's ratings and
+ * review topics (checked October 2026).
+ * The site deliberately makes no claims about the restaurant's history or kitchen routines — the business has
+ * changed hands over the years, so confirm anything like that with the current owner before adding it.
  */
 
 /* ----------------------------------------------------------------- Ratings */
@@ -18,32 +20,33 @@ export const RATINGS = {
 
 export const TICKER: { ko: string; en: string }[] = [
   { ko: '왕돈까스', en: 'King Donkatsu' },
-  { ko: '전골', en: 'Hot Pot' },
-  { ko: '물냉면', en: 'Naengmyeon' },
+  { ko: '물냉면', en: 'Mul Naengmyeon' },
+  { ko: '부대전골', en: 'Budae Jeongol' },
   { ko: '갈비탕', en: 'Galbitang' },
-  { ko: '부대찌개', en: 'Budae Jjigae' },
   { ko: '순두부', en: 'Sundubu' },
-  { ko: '감자탕', en: 'Gamjatang' },
+  { ko: '돌솥비빔밥', en: 'Dolsot Bibimbap' },
+  { ko: '부대찌개', en: 'Budae Jjigae' },
 ]
 
 /* ------------------------------------------------------------------- Story */
 
+export type Quote = { text: string; author: string; source: string; date: string }
+
 export const STORY = {
   statement: {
-    en: 'Since 2012, the green sign in Nukoa Plaza has kept the same promise — donkatsu fried the moment you order, hot pots bubbling for the whole table, and naengmyeon so cold it crackles.',
-    ko: '2012년부터, 뉴코아 플라자의 초록 간판은 같은 약속을 지켜왔습니다. 주문이 들어와야 튀기는 돈까스, 식탁 위에서 보글보글 끓는 전골, 살얼음이 사각거리는 냉면.',
+    en: 'Under the green sign in Nukoa Plaza, A-Hyang serves the Korean comfort food Duluth keeps coming back for — crisp golden donkatsu, cold buckwheat naengmyeon, and stews that arrive still bubbling.',
+    ko: '뉴코아 플라자의 초록 간판 아래, 애향은 둘루스가 다시 찾는 한식을 차려냅니다. 바삭한 황금빛 돈까스, 시원한 메밀 냉면, 보글보글 끓어오르는 뚝배기까지.',
   } satisfies T,
-  highlight: { en: ['fried', 'bubbling', 'cold'], ko: ['튀기는', '보글보글', '살얼음이'] },
+  highlight: { en: ['crisp', 'cold', 'bubbling'], ko: ['바삭한', '시원한', '보글보글'] },
   body: {
-    en: 'A-Hyang (애향, said “Ae-hyang”) is a family-run Korean kitchen. Side dishes are made fresh every morning, every cutlet is fried to order, and the portions are famously generous — the kind of place where regulars say it feels like eating at a friend’s house.',
-    ko: '애향은 가족이 함께 꾸려가는 한식당입니다. 반찬은 매일 아침 새로 만들고, 돈까스는 주문 즉시 튀기며, 양은 늘 넉넉하게 담습니다. 단골손님들이 “친구 집에서 밥 먹는 것 같다”고 말하는 곳이죠.',
+    en: 'A-Hyang (애향, said “Ae-hyang”) is a family-run Korean kitchen with more than fifty dishes on the menu: donkatsu and cold noodles, soups and stews, stone-pot bibimbap, stir-fries and a new lineup of ramen bowls. The portions are big, and regulars say it feels like eating at a friend’s house.',
+    ko: '애향은 가족이 함께 꾸려가는 한식당입니다. 돈까스와 냉면, 찌개와 탕, 돌솥비빔밥과 볶음 요리, 새로 선보인 라면까지 50가지가 넘는 메뉴를 넉넉한 양으로 차려냅니다. 단골손님들은 “친구 집에서 밥 먹는 것 같다”고 말합니다.',
   } satisfies T,
-  /** The restaurant's own words from its 2012 opening listing. */
-  promise: {
-    ko: '어머님의 손길 그대로 담은 정갈한 음식',
-    en: 'Wholesome food, made with a mother’s touch.',
-    caption: { en: 'Our promise since opening day, 2012', ko: '2012년 문을 연 날부터 지켜온 약속' } satisfies T,
-  },
+  /** A real review in each language, shown as the section's pull quote. */
+  quote: {
+    en: { text: 'The family that owns it has made me feel welcome from the first night I stumbled upon it.', author: 'Jessica R.', source: 'Google', date: '2025' },
+    ko: { text: '올 때 마다 기분이 좋아지는 곳입니다.', author: '김주평', source: 'Google', date: '2025' },
+  } satisfies Record<'en' | 'ko', Quote>,
   images: ['story-1', 'story-2'] as ImageName[],
   imageAlts: [
     { en: 'A bubbling Korean hot pot', ko: '보글보글 끓는 전골' },
@@ -52,15 +55,17 @@ export const STORY = {
 }
 
 export const STATS: { value?: number; from?: number; decimals?: number; suffix?: string; text?: T; label: T }[] = [
-  { value: 2012, from: 1990, label: { en: 'Serving Duluth since', ko: '둘루스에서 함께한 시간, 2012년부터' } },
   { value: 4.1, decimals: 1, suffix: '★', label: { en: 'Google rating · 500+ reviews', ko: 'Google 평점 · 리뷰 500개 이상' } },
   { value: 102, label: { en: 'Google reviews that mention our donkatsu', ko: '돈까스를 언급한 Google 리뷰' } },
   { value: 4.8, decimals: 1, suffix: '★', label: { en: 'DoorDash rating', ko: 'DoorDash 평점' } },
+  { value: 50, suffix: '+', label: { en: 'Dishes on the menu', ko: '메뉴 가짓수' } },
 ]
 
-export const PRESS = {
-  quote: { ko: '애향은 두툼하고 푸짐한 돈가스와 푹 우러난 전골의 깊은 맛으로 유명하다.', en: 'A-Hyang is famous for its thick, generous donkatsu and the deep flavor of its slow-simmered hot pots.' } satisfies T,
-  source: { en: 'The Atlanta Chosun Ilbo, 2020', ko: '애틀랜타 조선일보, 2020' } satisfies T,
+/** The big pull quote in the reviews section — a regular's post on Atlanta TalkTalk (Sept 28, 2024). */
+export const FEATURED = {
+  text: '내심 왕돈까스를 주문하려했는데 지인의 만류로 주문한 보통돈까스인데 저의 얼굴 싸이즈입니다.',
+  translation: 'I secretly wanted the King Donkatsu, but a friend talked me out of it. This is the regular one — and it’s the size of my face.',
+  source: { en: '아틀란타 맛객 · Atlanta TalkTalk, 2024', ko: '아틀란타 맛객 · 아틀란타 톡톡, 2024' } satisfies T,
 }
 
 /* --------------------------------------------------------------- Signature */
@@ -84,10 +89,10 @@ export const SIGNATURES: Signature[] = [
     ko: '왕돈까스',
     en: 'Donkatsu & King Donkatsu',
     badge: { en: 'Our most-loved dish', ko: '애향의 대표 메뉴' },
-    tagline: { en: 'Fried the moment you order — never before.', ko: '주문이 들어와야 튀깁니다. 미리 튀겨두지 않습니다.' },
+    tagline: { en: 'Golden, crunchy — and famously huge.', ko: '바삭하고 고소하게, 그리고 큼직하게.' },
     desc: {
-      en: 'A wide, golden cutlet under our house brown sauce, with shredded cabbage and macaroni salad on the side. Go big with the King — famously larger than a sheet of letter paper, and easily enough for two.',
-      ko: '넓고 바삭한 돈까스에 애향표 브라운 소스, 양배추 샐러드와 마카로니를 곁들였습니다. 크게 드시고 싶다면 왕돈까스 — A4 용지보다 크다는 바로 그 돈까스, 두 분이 드셔도 넉넉합니다.',
+      en: 'A crispy breaded pork cutlet with a house-made brown sauce, cabbage salad and macaroni on the side. Go big with the King: jumbo-sized, and regulars say it easily feeds two.',
+      ko: '바삭하게 튀긴 돈까스에 직접 만든 브라운 소스, 양배추 샐러드와 마카로니를 곁들였습니다. 크게 드시고 싶다면 점보 사이즈 왕돈까스 — 두 분이 드셔도 넉넉하다는 단골손님들의 평입니다.',
     },
     price: { en: 'Donkatsu $14.99 · King $24.99', ko: '돈까스 $14.99 · 왕돈까스 $24.99' },
     image: 'sig-katsu',
@@ -95,15 +100,15 @@ export const SIGNATURES: Signature[] = [
   },
   {
     id: 'jeongol',
-    ko: '전골',
-    en: 'Jeongol · Hot Pots',
-    badge: { en: 'On our sign since day one', ko: '간판에 새겨진 이름' },
+    ko: '부대전골',
+    en: 'Budae Jeongol · Army Hot Pot',
+    badge: { en: 'A-Hyang Special', ko: '애향 스페셜' },
     tagline: { en: 'Brought out bubbling — made for sharing.', ko: '보글보글 끓여 내는, 함께 나눠 먹는 맛.' },
     desc: {
-      en: 'Budae, gamja and mushroom-dumpling hot pots sized for two to four. Add ramen or cheese, then finish the last of the broth with fried rice — the way our regulars do.',
-      ko: '부대전골, 감자전골, 버섯만두전골을 2–4인분으로. 라면이나 치즈 사리를 넣고, 마지막 국물엔 볶음밥으로 마무리하세요. 단골손님들의 방식입니다.',
+      en: 'Sausage, Spam, tofu, noodles and vegetables in a spicy broth, in small, medium or large pots for the table. Add extra ramen noodles for $2.',
+      ko: '소시지, 스팸, 두부, 면과 채소를 얼큰한 국물에 끓여낸 부대전골. S·M·L 사이즈로 함께 나눠 드세요. 라면 사리는 $2에 추가할 수 있습니다.',
     },
-    price: { en: 'Serves 2 from $34.99', ko: '2인분 $34.99부터' },
+    price: { en: 'S $34.99 · M $48.99 · L $61.99', ko: 'S $34.99 · M $48.99 · L $61.99' },
     image: 'sig-jeongol',
     imageAlt: { en: 'A bubbling Korean hot pot', ko: '보글보글 끓는 전골' },
     position: '50% 72%',
@@ -113,10 +118,10 @@ export const SIGNATURES: Signature[] = [
     ko: '냉면',
     en: 'Naengmyeon · Cold Noodles',
     badge: { en: 'A Georgia-summer essential', ko: '여름이면 생각나는 맛' },
-    tagline: { en: 'Icy, tangy, impossibly refreshing.', ko: '살얼음 동동, 속까지 시원하게.' },
+    tagline: { en: 'Cold, tangy, and so refreshing.', ko: '새콤하고 시원하게, 속까지 개운하게.' },
     desc: {
-      en: 'Chewy buckwheat noodles in an ice-cold, tangy beef broth — or tossed in a sweet-and-spicy sauce made with real fruit. Pair it with LA galbi or spicy pork for the classic hot-and-cold combo.',
-      ko: '쫄깃한 메밀면에 새콤하고 시원한 육수, 또는 과일로 맛을 낸 매콤달콤한 양념. LA갈비나 제육볶음을 곁들인 콤보로 차갑고 뜨거운 조화를 즐겨보세요.',
+      en: 'Buckwheat noodles in a cold, tangy beef broth — or tossed in a spicy-sweet chili sauce as bibim naengmyeon. Make it a combo with fried dumplings, spicy pork or LA galbi.',
+      ko: '새콤하고 시원한 소고기 육수에 메밀면, 또는 매콤달콤한 양념에 비벼 먹는 비빔냉면. 군만두·제육볶음·LA갈비 콤보로도 즐겨보세요.',
     },
     price: { en: 'From $13.99 · combos from $19.99', ko: '$13.99부터 · 콤보 $19.99부터' },
     image: 'sig-naengmyeon',
@@ -126,11 +131,11 @@ export const SIGNATURES: Signature[] = [
     id: 'stews',
     ko: '탕 · 찌개',
     en: 'Soups & Stews',
-    badge: { en: 'Banchan made fresh every morning', ko: '반찬은 매일 아침 직접 만듭니다' },
+    badge: { en: 'Sundubu, six ways', ko: '순두부만 여섯 가지' },
     tagline: { en: 'Piping hot, deeply comforting.', ko: '펄펄 끓는 뚝배기 한 그릇의 위로.' },
     desc: {
-      en: 'Galbitang with tender short ribs, spicy yukgaejang, budae jjigae and soft tofu stews — served steaming in stone pots, alongside banchan our kitchen makes fresh every morning.',
-      ko: '부드러운 갈비탕, 얼큰한 육개장, 부대찌개와 순두부까지. 펄펄 끓는 뚝배기에 매일 아침 만드는 반찬을 곁들여 드립니다.',
+      en: 'Galbitang with tender short ribs, spicy yukgaejang and kalguksu, budae jjigae served bubbling in a clay pot — and soft tofu stew six ways, from regular to very spicy.',
+      ko: '부드러운 갈비탕, 얼큰한 육개장과 칼국수, 뚝배기에 보글보글 끓여 내는 부대찌개, 그리고 보통맛부터 아주 매운맛까지 여섯 가지 순두부.',
     },
     price: { en: 'From $13.99', ko: '$13.99부터' },
     image: 'sig-stew',
@@ -140,19 +145,50 @@ export const SIGNATURES: Signature[] = [
 
 /* -------------------------------------------------------------------- Menu */
 
-export type Tag = 'popular' | 'signature' | 'spicy' | 'share' | 'cold'
+export type Tag = 'popular' | 'spicy' | 'share' | 'cold' | 'new' | 'special' | 'veg'
 export type Size = { label: T; price: string }
-export type MenuItem = { ko: string; en: string; desc?: T; price: string; sizes?: Size[]; tags?: Tag[] }
-export type MenuCategory = { id: string; ko: string; en: string; note?: T; image: ImageName; position?: string; items: MenuItem[] }
+export type Choice = { label: T; options: T[] }
+export type MenuItem = { ko: string; en: string; desc?: T; price: string; sizes?: Size[]; choices?: Choice[]; tags?: Tag[] }
+export type Extra = { ko: string; en: string; price: string }
+export type LunchTier = { price: string; items: { ko: string; en: string }[] }
+export type MenuCategory = {
+  id: string
+  ko: string
+  en: string
+  note?: T
+  image: ImageName
+  position?: string
+  items: MenuItem[]
+  /** Small add-ons listed compactly under the dishes. */
+  extras?: Extra[]
+  /** Fixed-price groups (the lunch special) shown instead of individual dishes. */
+  tiers?: LunchTier[]
+}
 
+const M: T = { en: 'Medium', ko: '보통' }
+const L: T = { en: 'Large', ko: '곱빼기' }
+const S3: T[] = [
+  { en: 'Small', ko: '소' },
+  { en: 'Medium', ko: '중' },
+  { en: 'Large', ko: '대' },
+]
 const serves = (n: number): T => ({ en: `${n} ppl`, ko: `${n}인` })
-const SM: T = { en: 'Medium', ko: '보통' }
-const LG: T = { en: 'Large', ko: '곱빼기' }
+
+export const SUNDUBU_FLAVORS: T[] = [
+  { en: 'Yukgaejang (spicy beef)', ko: '육개장 순두부' },
+  { en: 'Kimchi', ko: '김치 순두부' },
+  { en: 'Pork', ko: '돼지 순두부' },
+  { en: 'Mushroom', ko: '버섯 순두부' },
+  { en: 'Assorted (seafood & beef)', ko: '섞어 순두부' },
+  { en: 'Seafood', ko: '해물 순두부' },
+]
 
 export const MENU_NOTE: T = {
-  en: 'In-store prices shown. Every order is made fresh — please call ahead for large groups or to confirm today’s menu.',
-  ko: '매장 가격 기준입니다. 모든 메뉴는 주문 즉시 조리하며, 단체 예약이나 오늘의 메뉴는 전화로 문의해 주세요.',
+  en: 'Prices from our in-store menu (October 2026) and may change — please call to confirm. Call ahead for pickup or large groups.',
+  ko: '2026년 10월 매장 메뉴판 기준 가격이며 변동될 수 있습니다. 포장 주문이나 단체 방문은 미리 전화 주세요.',
 }
+
+export const LUNCH_ID = 'lunch'
 
 export const MENU: MenuCategory[] = [
   {
@@ -161,52 +197,38 @@ export const MENU: MenuCategory[] = [
     en: 'Donkatsu',
     image: 'cat-katsu',
     note: {
-      en: 'Fried to order, never ahead. Served with shredded cabbage salad and macaroni salad.',
-      ko: '미리 튀겨두지 않고 주문 즉시 튀깁니다. 양배추 샐러드와 마카로니가 함께 나갑니다.',
+      en: 'The A-Hyang Special — the dish we’re best known for. Plates come with cabbage salad and macaroni.',
+      ko: '애향 스페셜 — 애향을 대표하는 메뉴입니다. 양배추 샐러드와 마카로니가 함께 나갑니다.',
     },
     items: [
-      { ko: '돈까스', en: 'Donkatsu', price: '$14.99', tags: ['signature'], desc: { en: 'The original — a golden, crunchy pork cutlet under our house brown sauce.', ko: '애향의 기본. 바삭하게 튀긴 돈까스에 애향표 브라운 소스.' } },
-      { ko: '왕돈까스', en: 'King Donkatsu', price: '$24.99', tags: ['popular', 'share'], desc: { en: 'Our legend: a jumbo cutlet bigger than a sheet of letter paper. Easily feeds two.', ko: '애향의 전설. A4 용지보다 큰 왕돈까스, 두 분이 드셔도 넉넉합니다.' } },
-      { ko: '치즈 돈까스', en: 'Cheese Donkatsu', price: '$18.99', desc: { en: 'Stuffed with melty mozzarella.', ko: '모짜렐라 치즈가 쭉 늘어나는 돈까스.' } },
-      { ko: '왕 치즈 돈까스', en: 'King Cheese Donkatsu', price: '$28.99', tags: ['share'], desc: { en: 'The King, filled with extra cheese.', ko: '치즈를 듬뿍 채운 왕돈까스.' } },
-      { ko: '매운 돈까스', en: 'Spicy Donkatsu', price: '$18.99', tags: ['spicy'], desc: { en: 'Our crispy cutlet with a fiery house sauce.', ko: '바삭한 돈까스에 매콤한 불 소스.' } },
-      { ko: '멘치까스', en: 'Menchi Katsu', price: '$17.99', desc: { en: 'A crispy fried patty of seasoned minced beef and pork.', ko: '다진 소고기와 돼지고기로 빚어 바삭하게 튀긴 멘치까스.' } },
-      { ko: '돈까스 덮밥', en: 'Pork Cutlet Rice Bowl', price: '$12.99', desc: { en: 'Sliced cutlet with onion, mushroom and egg over rice.', ko: '양파, 버섯, 계란과 함께 밥 위에 올린 돈까스.' } },
-    ],
-  },
-  {
-    id: 'jeongol',
-    ko: '전골',
-    en: 'Hot Pots',
-    image: 'cat-jeongol',
-    note: {
-      en: 'Made for the table — sized for 2, 3 or 4. Add ramen, cheese or glass noodles, and finish with fried rice.',
-      ko: '2·3·4인분으로 준비됩니다. 라면·치즈·당면 사리를 추가하고, 마무리는 볶음밥으로.',
-    },
-    items: [
-      { ko: '부대전골', en: 'Budae Jeongol (Army Hot Pot)', price: '$34.99', tags: ['popular', 'spicy'], sizes: [{ label: serves(2), price: '$34.99' }, { label: serves(3), price: '$48.99' }, { label: serves(4), price: '$61.99' }], desc: { en: 'Ham, sausage, kimchi and sweet-potato glass noodles in a spicy broth.', ko: '햄, 소시지, 김치, 당면을 넣고 얼큰하게 끓인 부대전골.' } },
-      { ko: '감자전골', en: 'Gamja Jeongol (Pork Bone Hot Pot)', price: '$34.99', tags: ['spicy'], sizes: [{ label: serves(2), price: '$34.99' }, { label: serves(3), price: '$48.99' }, { label: serves(4), price: '$61.99' }], desc: { en: 'Fall-off-the-bone pork neck and potatoes in a deep, spicy broth.', ko: '푹 고아낸 돼지 등뼈와 감자가 듬뿍, 진하고 얼큰한 감자전골.' } },
-      { ko: '버섯 만두전골', en: 'Mushroom & Dumpling Hot Pot', price: '$39.99', sizes: [{ label: serves(2), price: '$39.99' }, { label: serves(3), price: '$56.99' }, { label: serves(4), price: '$71.99' }], desc: { en: 'A mild, comforting pot of mushrooms and dumplings.', ko: '버섯과 만두를 듬뿍 넣은 순하고 따뜻한 전골.' } },
-      { ko: '곱창전골', en: 'Gopchang Jeongol (Beef Tripe Hot Pot)', price: '$39.99', tags: ['spicy'], sizes: [{ label: serves(2), price: '$39.99' }, { label: serves(3), price: '$54.99' }, { label: serves(4), price: '$71.99' }], desc: { en: 'A spicy, rich hot pot of beef tripe and vegetables.', ko: '고소한 곱창과 채소를 얼큰하게 끓인 곱창전골.' } },
+      { ko: '돈까스', en: 'Donkatsu', price: '$14.99', tags: ['popular'], desc: { en: 'The original crispy breaded pork cutlet, with a house-made brown sauce.', ko: '바삭하게 튀긴 오리지널 돈까스에 직접 만든 브라운 소스.' } },
+      { ko: '치즈 돈까스', en: 'Cheese Donkatsu', price: '$18.99', desc: { en: 'Pork cutlet stuffed with premium mozzarella.', ko: '프리미엄 모짜렐라 치즈를 가득 채운 돈까스.' } },
+      { ko: '매운 돈까스', en: 'Spicy Donkatsu', price: '$18.99', tags: ['spicy'], desc: { en: 'A fiery pork cutlet for spice lovers.', ko: '매운맛을 좋아하는 분들을 위한 화끈한 돈까스.' } },
+      { ko: '멘치까스', en: 'Menchi Katsu', price: '$17.99', desc: { en: 'Juicy, crispy fried patties made with a seasoned blend of minced beef and pork.', ko: '양념한 다진 소고기와 돼지고기로 빚어 바삭하게 튀긴 멘치까스.' } },
+      { ko: '왕 돈까스', en: 'King Donkatsu', price: '$24.99', tags: ['popular', 'share'], desc: { en: 'A jumbo-sized traditional pork cutlet. Regulars say it easily feeds two.', ko: '점보 사이즈 왕돈까스. 두 분이 드셔도 넉넉하다는 단골손님들의 평입니다.' } },
+      { ko: '왕 치즈 돈까스', en: 'King Cheese Donkatsu', price: '$28.99', tags: ['share'], desc: { en: 'The jumbo cutlet, filled with extra cheese.', ko: '치즈를 듬뿍 채운 점보 사이즈 왕돈까스.' } },
+      { ko: '돈까스 덮밥', en: 'Pork Cutlet Rice Bowl', price: '$12.99', tags: ['new'], desc: { en: 'Sliced pork cutlet with onion, mushroom and egg over rice.', ko: '양파, 버섯, 계란과 함께 밥 위에 올린 돈까스.' } },
     ],
   },
   {
     id: 'naengmyeon',
-    ko: '냉면',
-    en: 'Cold Noodles',
+    ko: '냉면 · 콤보',
+    en: 'Cold Noodles & Combos',
     image: 'cat-naengmyeon',
     note: {
-      en: 'Any combo can be made with bibim naengmyeon. Large size +$2.',
-      ko: '콤보는 비빔냉면으로 변경 가능하며, 곱빼기는 $2 추가입니다.',
+      en: 'Combos: swap the mul naengmyeon for spicy bibim naengmyeon, or size up to large for $2 more.',
+      ko: '콤보는 물냉면을 비빔냉면으로 바꿀 수 있고, $2 추가 시 곱빼기(라지)로 드립니다.',
     },
     items: [
-      { ko: '물냉면', en: 'Mul Naengmyeon', price: '$13.99', tags: ['cold', 'popular'], sizes: [{ label: SM, price: '$13.99' }, { label: LG, price: '$15.99' }], desc: { en: 'Chewy buckwheat noodles in an icy, tangy beef broth.', ko: '쫄깃한 메밀면에 새콤하고 시원한 육수.' } },
-      { ko: '비빔냉면', en: 'Bibim Naengmyeon', price: '$13.99', tags: ['cold', 'spicy'], sizes: [{ label: SM, price: '$13.99' }, { label: LG, price: '$15.99' }], desc: { en: 'Tossed in a sweet-and-spicy chili sauce made with real fruit.', ko: '과일로 맛을 낸 매콤달콤한 양념에 쓱쓱 비벼 먹는 냉면.' } },
-      { ko: '냉면 + 군만두', en: 'Naengmyeon + Fried Dumplings', price: '$19.99', desc: { en: 'Cold noodles with crispy pan-fried dumplings.', ko: '시원한 냉면에 바삭한 군만두.' } },
-      { ko: '냉면 + 제육볶음', en: 'Naengmyeon + Spicy Pork', price: '$23.99', desc: { en: 'The classic hot-and-cold pairing.', ko: '차가운 냉면과 매콤한 제육볶음의 찰떡궁합.' } },
-      { ko: '냉면 + LA갈비', en: 'Naengmyeon + LA Galbi', price: '$28.99', tags: ['popular'], desc: { en: 'Cold noodles with grilled, sweet-soy short ribs.', ko: '시원한 냉면에 달콤하게 구운 LA갈비.' } },
-      { ko: '냉면 사리 추가', en: 'Extra Noodles', price: '$7.99' },
+      { ko: '물냉면', en: 'Mul Naengmyeon', price: '$13.99', tags: ['cold', 'popular'], sizes: [{ label: M, price: '$13.99' }, { label: L, price: '$15.99' }], desc: { en: 'Buckwheat noodles in a cold, tangy beef broth.', ko: '새콤하고 시원한 소고기 육수에 메밀면.' } },
+      { ko: '비빔냉면', en: 'Bibim Naengmyeon', price: '$13.99', tags: ['cold', 'spicy'], sizes: [{ label: M, price: '$13.99' }, { label: L, price: '$15.99' }], desc: { en: 'Buckwheat noodles with a spicy-sweet chili sauce.', ko: '매콤달콤한 양념에 비벼 먹는 메밀면.' } },
+      { ko: '물냉면 + 군만두 콤보', en: 'Mul Naengmyeon + Dumplings', price: '$19.99', desc: { en: 'Cold buckwheat noodles in chilled broth, with fried dumplings.', ko: '시원한 물냉면에 바삭한 군만두.' } },
+      { ko: '물냉면 + 제육볶음 콤보', en: 'Mul Naengmyeon + Jaeyuk', price: '$23.99', desc: { en: 'Cold buckwheat noodles with spicy marinated pork.', ko: '시원한 물냉면에 매콤한 제육볶음.' } },
+      { ko: '물냉면 + LA갈비 콤보', en: 'Mul Naengmyeon + LA Galbi', price: '$28.99', tags: ['popular'], desc: { en: 'Cold buckwheat noodles with grilled beef short ribs.', ko: '시원한 물냉면에 구운 LA갈비.' } },
+      { ko: '순두부 + 제육 콤보', en: 'Sundubu + Jaeyuk', price: '$23.99', desc: { en: 'Any of our six soft tofu stews, with spicy marinated pork.', ko: '여섯 가지 순두부 중 하나에 매콤한 제육볶음.' } },
+      { ko: '순두부 + 갈비 콤보', en: 'Sundubu + Galbi', price: '$26.99', desc: { en: 'Any of our six soft tofu stews, with grilled beef short ribs.', ko: '여섯 가지 순두부 중 하나에 구운 갈비.' } },
     ],
+    extras: [{ ko: '냉면 추가 사리', en: 'Extra noodles', price: '$7.99' }],
   },
   {
     id: 'stews',
@@ -214,20 +236,30 @@ export const MENU: MenuCategory[] = [
     en: 'Soups & Stews',
     image: 'cat-stew',
     note: {
-      en: 'Served bubbling in stone pots. Soft tofu stews come mild, spicy or very spicy.',
-      ko: '뚝배기에 펄펄 끓여 드립니다. 순두부는 순한맛·매운맛·아주 매운맛 중에 고르세요.',
+      en: 'Budae jjigae comes bubbling in a traditional clay pot. Sundubu is made regular, spicy or very spicy.',
+      ko: '부대찌개는 뚝배기에 보글보글 끓여 드리고, 순두부는 보통맛·매운맛·아주 매운맛 중에 고르실 수 있습니다.',
     },
     items: [
-      { ko: '갈비탕', en: 'Galbitang', price: '$16.99', tags: ['popular'], desc: { en: 'Tender beef short ribs in a clear, deeply savory broth.', ko: '부드러운 소갈비를 맑고 깊은 국물에.' } },
-      { ko: '갈비탕 만두국', en: 'Galbitang with Dumplings', price: '$19.99', desc: { en: 'Short-rib soup with plump dumplings.', ko: '갈비탕에 만두를 더해 더 든든하게.' } },
-      { ko: '육개장', en: 'Yukgaejang', price: '$14.99', tags: ['spicy'], desc: { en: 'Spicy shredded-beef soup with scallions.', ko: '결대로 찢은 소고기와 대파를 넣은 얼큰한 육개장.' } },
-      { ko: '육개장 칼국수', en: 'Yukgaejang Kalguksu', price: '$16.99', tags: ['spicy'], desc: { en: 'Knife-cut noodles in the same spicy beef broth.', ko: '얼큰한 육개장 국물에 칼국수를.' } },
-      { ko: '부대찌개', en: 'Budae Jjigae (Army Stew)', price: '$14.99', tags: ['popular', 'spicy'], desc: { en: 'Ham, sausage, ramen and kimchi, bubbling in a stone pot.', ko: '햄, 소시지, 라면, 김치가 들어간 뚝배기 부대찌개.' } },
-      { ko: '감자탕', en: 'Gamjatang (Pork Bone Soup)', price: '$14.99', tags: ['spicy'], desc: { en: 'Our pork bone and potato stew, in a single-serving pot.', ko: '1인 뚝배기로 즐기는 감자탕.' } },
-      { ko: '떡만두국', en: 'Rice Cake & Dumpling Soup', price: '$14.99', desc: { en: 'Sliced rice cakes and dumplings in a mild beef broth.', ko: '순한 소고기 육수에 떡과 만두를 듬뿍.' } },
-      { ko: '김치찌개', en: 'Kimchi Jjigae', price: '$14.99', tags: ['spicy'], desc: { en: 'Well-fermented kimchi stew with pork.', ko: '잘 익은 김치와 돼지고기로 끓인 김치찌개.' } },
-      { ko: '순두부찌개', en: 'Soft Tofu Stew', price: '$13.99', desc: { en: 'Choose beef, kimchi, pork, mushroom or mixed.', ko: '육개장·김치·돼지고기·버섯·섞어 중에 선택.' } },
-      { ko: '해물 순두부', en: 'Seafood Soft Tofu Stew', price: '$14.99', desc: { en: 'Silky tofu with assorted seafood.', ko: '해산물을 듬뿍 넣은 순두부찌개.' } },
+      { ko: '김치찌개', en: 'Kimchi Jjigae', price: '$14.99', tags: ['spicy'], desc: { en: 'Spicy kimchi stew with pork and tofu.', ko: '돼지고기와 두부를 넣은 얼큰한 김치찌개.' } },
+      { ko: '육개장', en: 'Yukgaejang', price: '$14.99', tags: ['spicy'], desc: { en: 'Spicy beef soup with shredded beef and scallions.', ko: '결대로 찢은 소고기와 대파를 넣은 얼큰한 육개장.' } },
+      { ko: '떡만두국', en: 'Tteok Mandu Guk', price: '$14.99', desc: { en: 'Rice cake and dumpling soup in a mild beef broth.', ko: '순한 소고기 육수에 떡과 만두를 넣었습니다.' } },
+      { ko: '부대찌개 뚝배기', en: 'Budae Jjigae', price: '$14.99', tags: ['popular', 'spicy'], desc: { en: 'A savory, spicy stew with ham, sausage, ramen noodles and kimchi, served bubbling in a hot clay pot.', ko: '햄, 소시지, 라면, 김치를 넣고 뚝배기에 보글보글 끓여 내는 부대찌개.' } },
+      { ko: '육개장 칼국수', en: 'Yukgaejang Kalguksu', price: '$16.99', tags: ['spicy'], desc: { en: 'Noodles in a deep, spicy beef broth with shredded beef and crisp vegetables.', ko: '진하고 얼큰한 육개장 국물에 칼국수와 소고기, 아삭한 채소.' } },
+      { ko: '해물 칼국수', en: 'Seafood Kalguksu', price: '$17.99', desc: { en: 'Fresh clams, shrimp and vegetables in a savory seafood broth with hearty knife-cut noodles.', ko: '조개, 새우, 채소로 우려낸 시원한 해물 국물에 쫄깃한 칼국수.' } },
+      { ko: '육개장 만두국', en: 'Yukgaejang Mandu Guk', price: '$16.99', tags: ['spicy'], desc: { en: 'Rich, spicy beef broth with shredded beef, vegetables and dumplings.', ko: '진하고 얼큰한 육개장 국물에 소고기, 채소, 만두.' } },
+      { ko: '갈비탕', en: 'Galbitang', price: '$16.99', desc: { en: 'Tender beef short ribs in a savory, clear beef broth.', ko: '부드러운 소갈비를 맑고 깊은 국물에 담았습니다.' } },
+      { ko: '갈비탕 만두국', en: 'Galbitang Mandu Guk', price: '$19.99', desc: { en: 'Tender short ribs and dumplings in a deep, savory beef broth.', ko: '부드러운 갈비와 만두를 깊은 소고기 국물에.' } },
+      {
+        ko: '순두부찌개',
+        en: 'Sundubu (Soft Tofu Stew)',
+        price: '$13.99',
+        tags: ['popular'],
+        desc: { en: 'Silky soft tofu stew — pick a flavor and how spicy you like it.', ko: '부드러운 순두부찌개 — 종류와 맵기를 골라 주세요.' },
+        choices: [
+          { label: { en: 'Flavor', ko: '종류' }, options: SUNDUBU_FLAVORS },
+          { label: { en: 'Spice', ko: '맵기' }, options: [{ en: 'Regular', ko: '보통맛' }, { en: 'Spicy', ko: '매운맛' }, { en: 'Very spicy', ko: '아주 매운맛' }] },
+        ],
+      },
     ],
   },
   {
@@ -236,50 +268,118 @@ export const MENU: MenuCategory[] = [
     en: 'Bibimbap',
     image: 'cat-bibimbap',
     note: {
-      en: 'Stone-pot bowls arrive sizzling — wait a moment for the rice to crisp, then mix.',
-      ko: '돌솥은 지글지글 뜨겁게 나갑니다. 누룽지가 생기도록 잠시 기다렸다가 비벼 드세요.',
+      en: 'Dolsot bowls come sizzling in a hot stone pot, with crispy rice at the bottom.',
+      ko: '돌솥 비빔밥은 뜨거운 돌솥에 담겨 나와 바닥에 바삭한 누룽지가 생깁니다.',
     },
     items: [
-      { ko: '비빔밥', en: 'Bibimbap', price: '$13.99', desc: { en: 'Rice topped with seasoned vegetables and an egg.', ko: '갖은 나물과 계란을 올린 비빔밥.' } },
-      { ko: '돌솥 비빔밥', en: 'Dolsot Bibimbap', price: '$14.99', tags: ['popular'], desc: { en: 'In a sizzling stone bowl, with crispy rice at the bottom.', ko: '뜨거운 돌솥에 바삭한 누룽지까지.' } },
-      { ko: '제육 돌솥 비빔밥', en: 'Spicy Pork Dolsot', price: '$17.99', tags: ['spicy'] },
-      { ko: '오징어 돌솥 비빔밥', en: 'Spicy Squid Dolsot', price: '$18.99', tags: ['spicy'] },
-      { ko: '불고기 돌솥 비빔밥', en: 'Bulgogi Dolsot', price: '$19.99' },
-      { ko: '낙지 돌솥 비빔밥', en: 'Spicy Octopus Dolsot', price: '$19.99', tags: ['spicy'] },
-      { ko: '갈비 돌솥 비빔밥', en: 'Galbi Dolsot', price: '$25.99' },
+      { ko: '비빔밥', en: 'Bibimbap', price: '$13.99', desc: { en: 'Rice bowl topped with assorted vegetables and an egg.', ko: '갖은 나물과 계란을 올린 비빔밥.' } },
+      { ko: '돌솥 비빔밥', en: 'Dolsot Bibimbap', price: '$14.99', desc: { en: 'Bibimbap in a hot stone bowl with crispy rice.', ko: '뜨거운 돌솥에 담아 누룽지까지 바삭한 비빔밥.' } },
+      { ko: '제육 돌솥 비빔밥', en: 'Jaeyuk Dolsot Bibimbap', price: '$17.99', tags: ['spicy'], desc: { en: 'Spicy pork with vegetables in a hot stone bowl.', ko: '매콤한 제육과 채소를 올린 돌솥 비빔밥.' } },
+      { ko: '불고기 돌솥 비빔밥', en: 'Bulgogi Dolsot Bibimbap', price: '$19.99', desc: { en: 'Marinated beef with vegetables in a hot stone bowl.', ko: '양념 불고기와 채소를 올린 돌솥 비빔밥.' } },
+      { ko: '오징어 돌솥 비빔밥', en: 'Squid Dolsot Bibimbap', price: '$18.99', tags: ['spicy'], desc: { en: 'Spicy squid with vegetables in a hot stone bowl.', ko: '매콤한 오징어와 채소를 올린 돌솥 비빔밥.' } },
+      { ko: '낙지 돌솥 비빔밥', en: 'Octopus Dolsot Bibimbap', price: '$19.99', tags: ['spicy'], desc: { en: 'Spicy octopus with vegetables in a hot stone bowl.', ko: '매콤한 낙지와 채소를 올린 돌솥 비빔밥.' } },
+      { ko: '갈비 돌솥 비빔밥', en: 'Galbi Dolsot Bibimbap', price: '$25.99', desc: { en: 'Marinated short ribs with vegetables in a hot stone bowl.', ko: '양념 갈비와 채소를 올린 돌솥 비빔밥.' } },
     ],
   },
   {
     id: 'grill',
-    ko: '고기 · 볶음',
-    en: 'Grill & Stir-fry',
+    ko: '고기 · 전골',
+    en: 'Meat & Hot Pot',
     image: 'cat-grill',
-    note: { en: 'Comes to the table sizzling on a hot plate.', ko: '뜨거운 철판에 지글지글 담아 드립니다.' },
+    note: {
+      en: 'Budae jeongol and spicy squid are A-Hyang Specials, sized to share.',
+      ko: '부대전골과 오징어 볶음은 함께 나눠 먹기 좋은 애향 스페셜입니다.',
+    },
     items: [
-      { ko: 'LA 갈비', en: 'LA Galbi', price: '$27.99', tags: ['popular'], desc: { en: 'Grilled beef short ribs in our sweet soy marinade.', ko: '달콤한 간장 양념에 재운 소갈비 구이.' } },
-      { ko: '불고기', en: 'Bulgogi', price: '$19.99', desc: { en: 'Sweet-soy marinated beef, stir-fried with vegetables.', ko: '달콤한 간장 양념 소고기를 채소와 함께 볶아냈습니다.' } },
-      { ko: '제육볶음', en: 'Jaeyuk Bokkeum (Spicy Pork)', price: '$16.99', tags: ['spicy'], sizes: [{ label: serves(1), price: '$16.99' }, { label: serves(2), price: '$30.99' }, { label: serves(3), price: '$45.99' }], desc: { en: 'Pork stir-fried with vegetables in a zesty gochujang sauce.', ko: '고추장 양념에 채소와 함께 볶은 돼지고기.' } },
-      { ko: '오징어볶음', en: 'Ojingeo Bokkeum (Spicy Squid)', price: '$18.99', tags: ['spicy'], sizes: [{ label: { en: 'Small', ko: '소' }, price: '$18.99' }, { label: { en: 'Medium', ko: '중' }, price: '$32.99' }], desc: { en: 'Tender squid and vegetables in a bold, spicy sauce.', ko: '부드러운 오징어와 채소를 매콤하게 볶았습니다.' } },
+      { ko: '불고기', en: 'Bulgogi', price: '$19.99', desc: { en: 'Thinly sliced ribeye in a sweet and savory soy marinade, stir-fried with vegetables.', ko: '달콤짭짤한 간장 양념에 재운 얇은 소고기를 채소와 함께 볶았습니다.' } },
+      { ko: 'LA 갈비', en: 'LA Galbi', price: '$27.99', tags: ['popular'], desc: { en: 'Tender beef short ribs marinated in a signature sweet soy sauce.', ko: '애향만의 달콤한 간장 양념에 재운 부드러운 소갈비.' } },
+      { ko: '제육볶음', en: 'Jaeyuk Bokkeum (Spicy Pork)', price: '$16.99', tags: ['spicy'], sizes: [{ label: serves(1), price: '$16.99' }, { label: serves(2), price: '$30.99' }, { label: serves(3), price: '$45.99' }], desc: { en: 'Spicy marinated pork stir-fried with fresh vegetables in a zesty gochujang sauce.', ko: '고추장 양념에 재운 돼지고기를 신선한 채소와 함께 볶았습니다.' } },
+      { ko: '부대전골', en: 'Budae Jeongol (Army Hot Pot)', price: '$34.99', tags: ['special', 'spicy', 'share'], sizes: [{ label: S3[0], price: '$34.99' }, { label: S3[1], price: '$48.99' }, { label: S3[2], price: '$61.99' }], desc: { en: 'Sausage, Spam, tofu, noodles and vegetables in a spicy broth.', ko: '소시지, 스팸, 두부, 면과 채소를 얼큰한 국물에 끓인 부대전골.' } },
+      { ko: '오징어 볶음', en: 'Ojingeo Bokkeum (Spicy Squid)', price: '$18.99', tags: ['special', 'spicy'], sizes: [{ label: S3[0], price: '$18.99' }, { label: S3[1], price: '$32.99' }], desc: { en: 'Tender squid stir-fried with vegetables in a bold, spicy sauce.', ko: '부드러운 오징어를 채소와 함께 매콤하게 볶았습니다.' } },
     ],
   },
   {
-    id: 'street',
-    ko: '분식 · 라면',
-    en: 'Street Food & Ramen',
-    image: 'cat-street',
-    note: { en: 'New this year: ramen bowls, fried rice and Korean-style sandwiches.', ko: '올해 새로 선보인 라면, 볶음밥, 한국식 샌드위치.' },
+    id: 'new',
+    ko: '신메뉴',
+    en: 'New on the Menu',
+    image: 'g-6',
+    note: {
+      en: 'Ramen bowls, fried rice and sandwiches — all new on our menu.',
+      ko: '새로 선보인 라면, 볶음밥, 샌드위치입니다.',
+    },
     items: [
-      { ko: '소떡소떡', en: 'Sotteok Skewers', price: '$9.99', tags: ['popular'], desc: { en: 'Sausage and rice-cake skewers in a sweet-and-spicy glaze.', ko: '소시지와 떡을 꿰어 달콤매콤한 소스를 바른 소떡소떡.' } },
-      { ko: '군만두', en: 'Fried Dumplings', price: '$6.99', sizes: [{ label: { en: '4 pcs', ko: '4개' }, price: '$6.99' }, { label: { en: '8 pcs', ko: '8개' }, price: '$12.99' }] },
-      { ko: '부대라면', en: 'Budae Ramen', price: '$13.99', tags: ['spicy'], desc: { en: 'Army-stew style ramen with sausage, kimchi and tofu.', ko: '소시지, 김치, 두부를 넣은 부대찌개 스타일 라면.' } },
-      { ko: '돈까스 라면', en: 'Donkatsu Ramen', price: '$13.99', desc: { en: 'Ramen topped with a crispy pork cutlet.', ko: '바삭한 돈까스를 올린 라면.' } },
-      { ko: '순두부 라면', en: 'Sundubu Ramen', price: '$13.99' },
-      { ko: '불고기 라면', en: 'Bulgogi Ramen', price: '$14.99' },
-      { ko: '짬뽕밥', en: 'Jjamppong Rice', price: '$14.99', tags: ['spicy'], desc: { en: 'Spicy seafood soup with a bowl of rice.', ko: '얼큰한 해물 짬뽕 국물에 밥 한 공기.' } },
-      { ko: '스팸 계란밥', en: 'Spam & Egg Fried Rice', price: '$9.99' },
-      { ko: '매운 버섯 볶음밥', en: 'Spicy Mushroom Fried Rice', price: '$11.99', tags: ['spicy'] },
-      { ko: '돈까스 필리', en: 'Pork Cutlet Philly', price: '$11.99', desc: { en: 'Crispy cutlet, grilled onions, peppers and mozzarella on a roll.', ko: '바삭한 돈까스에 구운 양파, 피망, 모짜렐라를 더한 샌드위치.' } },
-      { ko: '불고기 필리', en: 'Bulgogi Philly', price: '$14.99', desc: { en: 'Bulgogi beef, grilled onions, peppers and mozzarella.', ko: '불고기에 구운 양파, 피망, 모짜렐라를 더한 샌드위치.' } },
+      { ko: '부대 라면', en: 'Budae Ramen', price: '$13.99', tags: ['spicy'], desc: { en: 'Spicy army-stew-style ramen with kimchi, sausage, tofu and assorted toppings.', ko: '김치, 소시지, 두부 등을 넣은 얼큰한 부대찌개 스타일 라면.' } },
+      { ko: '순두부 라면', en: 'Sundubu Ramen', price: '$13.99', desc: { en: 'Soft tofu stew served with ramen noodles.', ko: '순두부찌개에 라면을 넣었습니다.' } },
+      { ko: '불고기 라면', en: 'Bulgogi Ramen', price: '$14.99', desc: { en: 'Savory ramen topped with stir-fried beef and vegetables.', ko: '볶은 불고기와 채소를 올린 라면.' } },
+      { ko: '돈까스 라면', en: 'Donkatsu Ramen', price: '$13.99', desc: { en: 'Ramen topped with a crispy pork cutlet and vegetables.', ko: '바삭한 돈까스와 채소를 올린 라면.' } },
+      { ko: '짬뽕밥', en: 'Jjamppong Rice', price: '$14.99', tags: ['spicy'], desc: { en: 'Spicy seafood soup served with a side of steamed rice.', ko: '얼큰한 해물 짬뽕 국물에 공기밥.' } },
+      { ko: '스팸 계란밥', en: 'Spam Egg Fried Rice', price: '$9.99', desc: { en: 'Savory fried rice with Spam, eggs and vegetables.', ko: '스팸, 계란, 채소를 넣고 볶은 볶음밥.' } },
+      { ko: '매운 버섯 볶음밥', en: 'Spicy Mushroom Fried Rice', price: '$11.99', tags: ['spicy', 'veg'], desc: { en: 'Fried rice with mushrooms, egg and green onion, tossed in a spicy sauce.', ko: '버섯, 계란, 파를 넣고 매콤한 소스에 볶은 볶음밥.' } },
+      { ko: '돈까스 필리', en: 'Pork Cutlet Philly', price: '$11.99', desc: { en: 'Crispy pork cutlet, grilled onions and peppers with mozzarella on a sandwich.', ko: '바삭한 돈까스에 구운 양파, 피망, 모짜렐라 치즈를 넣은 샌드위치.' } },
+      { ko: '불고기 필리', en: 'Bulgogi Philly', price: '$14.99', desc: { en: 'Marinated bulgogi beef, grilled onions and peppers with mozzarella on a sandwich.', ko: '불고기에 구운 양파, 피망, 모짜렐라 치즈를 넣은 샌드위치.' } },
+      { ko: '치포틀레 파니니', en: 'Chipotle Panini', price: '$13.99', desc: { en: 'Grilled chicken with mozzarella and chipotle sauce on toasted panini bread.', ko: '구운 치킨과 모짜렐라, 치포틀레 소스를 넣어 구운 파니니.' } },
+    ],
+  },
+  {
+    id: 'sides',
+    ko: '전채 · 사이드',
+    en: 'Appetizers & Sides',
+    image: 'cat-street',
+    note: { en: 'Starters to share, plus extra sides and sauces.', ko: '함께 나눠 먹기 좋은 전채 요리와 추가 사이드.' },
+    items: [
+      { ko: '군만두', en: 'Gun-Mandu (Fried Dumplings)', price: '$8.99', sizes: [{ label: { en: '4 pcs', ko: '4개' }, price: '$8.99' }, { label: { en: '8 pcs', ko: '8개' }, price: '$14.99' }], desc: { en: 'Crispy, golden-fried Korean dumplings filled with seasoned meat and vegetables.', ko: '고기와 채소 소를 넣어 노릇하게 튀긴 군만두.' } },
+      { ko: '소떡소떡', en: 'Sotteok Sotteok', price: '$9.99', desc: { en: 'Sausage and rice cake skewers, grilled and glazed with a sweet and spicy sauce — a Korean street-food favorite.', ko: '소시지와 떡을 꼬치에 꿰어 굽고 달콤매콤한 소스를 바른 길거리 간식.' } },
+      { ko: '길거리 오믈렛', en: 'Street Omelette', price: '$7.99', desc: { en: 'A hearty Korean street-style omelette folded with diced ham, cabbage, carrot and onion, with mozzarella.', ko: '햄, 양배추, 당근, 양파를 넣고 모짜렐라 치즈와 함께 부친 길거리 오믈렛.' } },
+      { ko: '돈까스 오믈렛', en: 'Pork Cutlet Omelette', price: '$9.99', desc: { en: 'An omelette with green onion, onion, cabbage and mozzarella, served with a crispy pork cutlet.', ko: '파, 양파, 양배추, 모짜렐라 치즈를 넣은 오믈렛에 바삭한 돈까스.' } },
+    ],
+    extras: [
+      { ko: '라면 사리', en: 'Ramen noodles', price: '$2.00' },
+      { ko: '공기밥', en: 'Steamed rice', price: '$1.50' },
+      { ko: '돈까스 양배추 샐러드', en: 'Cabbage salad', price: '$1.00' },
+      { ko: '마카로니', en: 'Macaroni salad', price: '$1.50' },
+      { ko: '돈까스 소스', en: 'Donkatsu sauce', price: '$0.50' },
+      { ko: '매운 돈까스 소스', en: 'Spicy donkatsu sauce', price: '$2.00' },
+      { ko: '소다', en: 'Soft drink', price: '$1.50' },
+    ],
+  },
+  {
+    id: LUNCH_ID,
+    ko: '점심 특선',
+    en: 'Lunch Special',
+    image: 'g-1',
+    note: { en: 'Tuesday to Friday, 11 AM – 3 PM.', ko: '화요일–금요일, 오전 11시 – 오후 3시.' },
+    items: [],
+    tiers: [
+      {
+        price: '$12.99',
+        items: [
+          { ko: '물냉면', en: 'Mul Naengmyeon' },
+          { ko: '비빔냉면', en: 'Bibim Naengmyeon' },
+          { ko: '비빔밥', en: 'Bibimbap' },
+          { ko: '김치찌개', en: 'Kimchi Jjigae' },
+          { ko: '육개장', en: 'Yukgaejang' },
+          { ko: '떡만두국', en: 'Tteok Mandu Guk' },
+          { ko: '순두부 (택1)', en: 'Sundubu (any flavor)' },
+        ],
+      },
+      {
+        price: '$13.99',
+        items: [
+          { ko: '부대찌개 뚝배기', en: 'Budae Jjigae' },
+          { ko: '돌솥 비빔밥', en: 'Dolsot Bibimbap' },
+          { ko: '돈까스', en: 'Donkatsu' },
+        ],
+      },
+      {
+        price: '$15.99',
+        items: [
+          { ko: '갈비탕', en: 'Galbitang' },
+          { ko: '육개장 만두국', en: 'Yukgaejang Mandu Guk' },
+          { ko: '제육볶음', en: 'Jaeyuk Bokkeum' },
+          { ko: '제육 돌솥 비빔밥', en: 'Jaeyuk Dolsot Bibimbap' },
+        ],
+      },
+      { price: '$23.99', items: [{ ko: '갈비 돌솥 비빔밥', en: 'Galbi Dolsot Bibimbap' }] },
     ],
   },
 ]
@@ -293,7 +393,6 @@ export const REVIEWS: Review[] = [
   { lang: 'en', text: 'Hands down crunchiest Donkatsu in the metro.', author: 'Ll G.', source: 'Yelp', rating: 5, date: '2024' },
   { lang: 'en', text: 'A-Hyang has become one of my go-to comfort spots! I always order the Wang Donkatsu (왕돈까스)… The portion size is HUGE—enough to feed two people.', author: 'SB', source: 'Google', rating: 5, date: '2026' },
   { lang: 'ko', text: '여기 정말 맛있어요. 아틀란타 갈때 마다 꼭 들려요. 다 맛있는데, 왕돈까스와 순두부 찌개가 정말 맛있어요. 사장님 부부 정말 친절해요.', translation: 'It’s really delicious here — I stop by every time I’m in Atlanta. Everything is good, but the King Donkatsu and the soft tofu stew are especially delicious. The owner couple is so kind.', author: 'Seihill K.', source: 'Google', rating: 5, date: '2026' },
-  { lang: 'en', text: 'The family that owns it has made me feel welcome from the first night I stumbled upon it. There are a lot of Korean restaurants in Duluth, but this is by far my favorite.', author: 'Jessica R.', source: 'Google', rating: 5, date: '2025' },
   { lang: 'en', text: 'The mul naengmyun is delicious and so refreshing in the Georgia heat. Quiet and cute family business.', author: 'Kat S.', source: 'Yelp', rating: 5, date: '2024' },
   { lang: 'en', text: 'The best tonkatsu in the area. The meat is not too thin and not too thick and it is flavored all the way through. The Mac salad is really good and complements the crispy tonkatsu.', author: 'Jessica S.', source: 'Google', rating: 5, date: '2022' },
   { lang: 'en', text: 'Their kimchi is the perfect fermented sour that makes it really flavorful as well, and the other banchan and sides were delicious.', author: 'Leaf W.', source: 'Google', rating: 5, date: '2026' },
@@ -302,7 +401,6 @@ export const REVIEWS: Review[] = [
   { lang: 'en', text: 'The stone bowl soups are insanely delicious and arrive at your table hot and bubbling.', author: 'Jess B.', source: 'Yelp', rating: 5, date: '2024' },
   { lang: 'en', text: 'You get an insanely large portion of food for the price. This place deserves a 5/5 for that alone.', author: 'Mohd H.', source: 'Google', rating: 5, date: '2024' },
   { lang: 'en', text: 'A-Hyang is a go-to spot for tonkatsu! The service is always great, the interior is clean, and the food is absolutely delicious.', author: 'Trinity N.', source: 'Yelp', rating: 5, date: '2025' },
-  { lang: 'ko', text: '저희 가족이 참 좋아하는 식당입니다. … 올 때 마다 기분이 좋아지는 곳입니다.', translation: 'A restaurant our whole family loves… a place that puts me in a good mood every time I come.', author: '김주평', source: 'Google', rating: 5, date: '2025' },
   { lang: 'en', text: '…the king size tonkatsu (HUGE and can feed 2-3 people and comes with delicious mac salad) and the bibim naengmyeon. Get these two things, you will not regret it!', author: 'Alexandria N.', source: 'Yelp', rating: 5, date: '2024' },
   { lang: 'en', text: 'Not only incredibly generous in size (and value priced, considering the size, plus all the sides!), it was truly amazing! Possibly one of the best Katsu dishes I’ve ever had??', author: 'Rose E.', source: 'Yelp', rating: 5, date: '2023' },
   { lang: 'en', text: 'A-Hyang graciously prepared the food again for me. This is excellent customer service! And of course the food was still hot and delicious.', author: 'Grace C.', source: 'DoorDash', rating: 5, date: '2025' },

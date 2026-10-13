@@ -58,7 +58,7 @@ export function Gallery() {
           ))}
           <motion.div style={{ opacity: veil }} className="pointer-events-none absolute inset-0 bg-ink" />
           <motion.div style={{ opacity: captionOpacity, y: captionY }} className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-6 text-center [text-shadow:0_2px_24px_rgba(0,0,0,0.65)]">
-            <p className="eyebrow text-paper/80">{t({ en: 'Made to order', ko: '주문 즉시 조리' })}</p>
+            <p className="eyebrow text-paper/80">{t({ en: 'Korean comfort food', ko: '든든한 한 끼' })}</p>
             <p className={`mt-4 max-w-[16ch] text-paper ${lang === 'ko' ? 'font-batang text-[clamp(2.2rem,6vw,5rem)] leading-[1.2] font-bold' : 'font-display text-[clamp(2.4rem,6.5vw,5.6rem)] leading-[1] font-[380]'}`}>
               {lang === 'ko' ? '정성은 기본, 양은 넉넉하게.' : <>Generous plates, <span className="italic text-gold">made with care.</span></>}
             </p>

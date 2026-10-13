@@ -2,7 +2,7 @@ import type { T } from '../lib/i18n'
 import type { Week } from '../lib/hours'
 
 const ADDRESS_QUERY = 'A-Hyang, 3230 Steve Reynolds Blvd #102, Duluth, GA 30096'
-const OPEN = { open: 11 * 60, close: 21 * 60 + 30 } // 11:00 AM – 9:30 PM
+const OPEN = { open: 11 * 60, close: 22 * 60 } // 11:00 AM – 10:00 PM (in-store menu, Oct 2026)
 
 export const RESTAURANT = {
   name: { en: 'A-Hyang', ko: '애향' } satisfies T,
@@ -11,7 +11,6 @@ export const RESTAURANT = {
   street: '3230 Steve Reynolds Blvd #102',
   city: 'Duluth, GA 30096',
   plaza: { en: 'Nukoa Plaza', ko: '뉴코아 플라자' } satisfies T,
-  since: 2012,
   directionsUrl: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(ADDRESS_QUERY)}`,
   mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ADDRESS_QUERY)}`,
   mapEmbedUrl: `https://maps.google.com/maps?q=${encodeURIComponent(ADDRESS_QUERY)}&t=m&z=16&ie=UTF8&iwloc=&output=embed`,
@@ -21,7 +20,11 @@ export const RESTAURANT = {
   instagramHandle: 'ahyang_duluth',
   /** Index 0 = Sunday. Closed Mondays. */
   hours: [OPEN, null, OPEN, OPEN, OPEN, OPEN, OPEN] satisfies Week as Week,
-  lunchSpecial: { en: 'Lunch specials Tue–Thu, 11 AM – 2:30 PM', ko: '런치 스페셜 화–목 오전 11시 – 오후 2시 30분' } satisfies T,
+  lunch: {
+    when: { en: 'Tue–Fri, 11\u00a0AM\u00a0–\u00a03\u00a0PM', ko: '화–금 오전\u00a011시\u00a0–\u00a0오후\u00a03시' } satisfies T,
+    from: '$12.99',
+  },
+  lunchSpecial: { en: 'Lunch special Tue–Fri, 11\u00a0AM\u00a0–\u00a03\u00a0PM · from\u00a0$12.99', ko: '점심 특선 화–금 오전\u00a011시\u00a0–\u00a0오후\u00a03시 · $12.99부터' } satisfies T,
 }
 
 export const NAV: { id: string; label: T }[] = [

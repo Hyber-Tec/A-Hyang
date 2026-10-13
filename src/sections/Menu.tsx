@@ -1,20 +1,32 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useRef, useState } from 'react'
-import { MENU, MENU_NOTE, type MenuCategory, type MenuItem, type Tag } from '../data/content'
+import { LUNCH_ID, MENU, MENU_NOTE, type Extra, type LunchTier, type MenuCategory, type MenuItem, type Tag } from '../data/content'
 import { RESTAURANT } from '../data/restaurant'
 import { useLang, useT, type T } from '../lib/i18n'
 import { useScrollTo } from '../lib/scroll'
 import { Img } from '../components/Img'
 import { EASE_OUT, MaskText, Reveal } from '../components/motion'
 import { SectionLabel } from '../components/SectionLabel'
-import { ArrowRight, FlameIcon, PhoneIcon, StarIcon, UsersIcon } from '../components/icons'
+import { ArrowRight, FlameIcon, PhoneIcon, StarIcon, UsersIcon, UtensilsIcon } from '../components/icons'
 
 const TAGS: Record<Tag, { label: T; className: string; icon?: 'flame' | 'star' | 'users' }> = {
   popular: { label: { en: 'Popular', ko: '인기' }, className: 'bg-ink text-paper', icon: 'star' },
-  signature: { label: { en: 'Signature', ko: '대표' }, className: 'bg-gold text-ink', icon: 'star' },
+  special: { label: { en: 'A-Hyang Special', ko: '애향 스페셜' }, className: 'bg-gold text-ink', icon: 'star' },
+  new: { label: { en: 'New', ko: '신메뉴' }, className: 'bg-chili-deep text-white' },
   spicy: { label: { en: 'Spicy', ko: '매운맛' }, className: 'bg-chili/12 text-chili', icon: 'flame' },
   share: { label: { en: 'For sharing', ko: '여럿이 함께' }, className: 'bg-leaf-deep/12 text-leaf-deep', icon: 'users' },
   cold: { label: { en: 'Served cold', ko: '시원하게' }, className: 'bg-sky-700/10 text-sky-800' },
+  veg: { label: { en: 'Vegetarian', ko: '채식' }, className: 'bg-leaf/30 text-leaf-deep' },
+}
+
+const priceValue = (p: string) => parseFloat(p.replace(/[^0-9.]/g, '')) || Infinity
+
+/** Number of dishes and the lowest price in a category — lunch tiers count each dish they list. */
+function summarize(c: MenuCategory) {
+  const count = c.tiers ? c.tiers.reduce((n, tier) => n + tier.items.length, 0) : c.items.length
+  const prices = c.tiers ? c.tiers.map((tier) => tier.price) : c.items.map((i) => i.price)
+  const from = Math.min(...prices.map(priceValue))
+  return { count, from: Number.isFinite(from) ? from.toFixed(2) : null }
 }
 
 export function Menu() {
@@ -24,12 +36,22 @@ export function Menu() {
   const [activeId, setActiveId] = useState(MENU[0].id)
   const active = MENU.find((c) => c.id === activeId) ?? MENU[0]
   const panelRef = useRef<HTMLDivElement>(null)
+  const tabsRef = useRef<HTMLDivElement>(null)
 
-  const select = (id: string) => {
+  const select = (id: string, reveal = false) => {
     setActiveId(id)
-    // If the reader is already deep in a long list, bring the new category's top into view.
+    // Phones: slide the chosen pill to the middle of the scrollable tab row.
+    const row = tabsRef.current
+    const tab = row?.querySelector<HTMLElement>(`[data-id="${id}"]`)
+    if (row && tab && row.offsetParent) {
+      const r = row.getBoundingClientRect()
+      const b = tab.getBoundingClientRect()
+      row.scrollBy({ left: b.left - r.left - (r.width - b.width) / 2, behavior: 'smooth' })
+    }
+    // Bring the new category's top into view when the reader is already deep in a long list,
+    // or when they picked it from outside the tabs.
     const top = panelRef.current?.getBoundingClientRect().top ?? 0
-    if (top < 0) {
+    if (reveal || top < 0) {
       if (window.innerWidth >= 1024) scrollTo('#menu-strips')
       else scrollTo('#menu-panel', -150) // clear the nav + sticky tabs
     }
@@ -57,6 +79,20 @@ export function Menu() {
               <PhoneIcon className="h-4 w-4" />
               {t({ en: 'Call for pickup', ko: '포장 주문 전화' })} · {RESTAURANT.phone}
             </a>
+            <button
+              type="button"
+              onClick={() => select(LUNCH_ID, true)}
+              className="group mt-6 flex w-full max-w-md items-center gap-4 rounded-2xl bg-gold/25 px-5 py-4 text-left transition-colors hover:bg-gold/40"
+            >
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gold-deep text-paper">
+                <UtensilsIcon className="h-5 w-5" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block font-semibold text-ink">{t({ en: `Lunch special from ${RESTAURANT.lunch.from}`, ko: `점심 특선 ${RESTAURANT.lunch.from}부터` })}</span>
+                <span className="mt-0.5 block text-[0.95rem] text-ink/70">{t(RESTAURANT.lunch.when)}</span>
+              </span>
+              <ArrowRight className="h-5 w-5 shrink-0 text-gold-deep transition-transform group-hover:translate-x-1" />
+            </button>
           </Reveal>
         </div>
 
@@ -71,12 +107,13 @@ export function Menu() {
 
         {/* Phones & tablets: sticky pill tabs */}
         <div id="menu-tabs" style={{ top: 'var(--nav-offset, 0px)' }} className="sticky z-20 -mx-5 mt-12 bg-paper/90 px-5 py-3 backdrop-blur-md transition-[top] duration-500 md:-mx-8 md:px-8 lg:hidden">
-          <div role="tablist" aria-label={t({ en: 'Menu categories', ko: '메뉴 분류' })} className="no-scrollbar flex gap-2 overflow-x-auto" data-lenis-prevent>
+          <div ref={tabsRef} role="tablist" aria-label={t({ en: 'Menu categories', ko: '메뉴 분류' })} className="no-scrollbar flex gap-2 overflow-x-auto" data-lenis-prevent>
             {MENU.map((c) => {
               const on = c.id === activeId
               return (
                 <button
                   key={c.id}
+                  data-id={c.id}
                   role="tab"
                   type="button"
                   aria-selected={on}
@@ -107,34 +144,39 @@ export function Menu() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.45, ease: EASE_OUT }}
             >
-              <div className="relative mb-6 overflow-hidden rounded-[22px] lg:hidden">
+              <div className="relative mb-5 overflow-hidden rounded-[22px] lg:hidden">
                 <Img name={active.image} alt={t({ en: active.en, ko: active.ko })} sizes="100vw" className="aspect-[16/9]" position={active.position} />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <p className="absolute bottom-4 left-5 font-batang text-3xl font-bold text-paper">{active.ko}</p>
               </div>
+              {active.note && <p className="mb-2 text-[1rem] leading-relaxed text-ink/70 lg:hidden">{t(active.note)}</p>}
 
-              <div className="mb-2 hidden items-baseline justify-between border-b border-ink/15 pb-5 lg:flex">
-                <h3 className="flex items-baseline gap-4">
+              <div className="mb-2 hidden items-baseline justify-between gap-8 border-b border-ink/15 pb-5 lg:flex">
+                <h3 className="flex shrink-0 items-baseline gap-4">
                   <span className="font-batang text-4xl font-bold">{active.ko}</span>
                   <span className="font-display text-2xl italic text-ink/55">{active.en}</span>
                 </h3>
                 {active.note && <p className="max-w-md text-right text-[0.95rem] text-ink/60">{t(active.note)}</p>}
               </div>
 
-              <ul className="grid gap-x-14 lg:grid-cols-2">
-                {active.items.map((item, i) => (
-                  <motion.li
-                    key={item.ko + item.en}
-                    className="border-b border-ink/10"
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.05 + i * 0.035, ease: EASE_OUT }}
-                  >
-                    <MenuRow item={item} />
-                  </motion.li>
-                ))}
-              </ul>
-              {active.note && <p className="mt-5 text-[0.95rem] leading-relaxed text-ink/65 lg:hidden">{t(active.note)}</p>}
+              {active.tiers ? (
+                <LunchTiers tiers={active.tiers} />
+              ) : (
+                <ul className="grid gap-x-14 lg:grid-cols-2">
+                  {active.items.map((item, i) => (
+                    <motion.li
+                      key={item.ko + item.en}
+                      className="border-b border-ink/10"
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.05 + i * 0.035, ease: EASE_OUT }}
+                    >
+                      <MenuRow item={item} />
+                    </motion.li>
+                  ))}
+                </ul>
+              )}
+              {active.extras && <Extras extras={active.extras} />}
             </motion.div>
           </AnimatePresence>
         </div>
@@ -145,7 +187,7 @@ export function Menu() {
 
 function Strip({ c, index, active, onSelect }: { c: MenuCategory; index: number; active: boolean; onSelect: () => void }) {
   const t = useT()
-  const from = Math.min(...c.items.map((i) => parseFloat(i.price.replace(/[^0-9.]/g, '')) || Infinity))
+  const { count, from } = summarize(c)
   return (
     <button
       type="button"
@@ -182,12 +224,12 @@ function Strip({ c, index, active, onSelect }: { c: MenuCategory; index: number;
           active ? 'translate-y-0 opacity-100 delay-200' : 'pointer-events-none translate-y-4 opacity-0'
         }`}
       >
-        <span>
+        <span className="min-w-0">
           <span className="block font-batang text-[2.6rem] leading-none font-bold whitespace-nowrap text-paper">{c.ko}</span>
           <span className="mt-2 block font-display text-xl whitespace-nowrap italic text-paper/80">{c.en}</span>
         </span>
         <span className="flex shrink-0 items-center gap-2 rounded-full bg-paper/90 px-4 py-2 text-sm font-semibold whitespace-nowrap text-ink">
-          {Number.isFinite(from) ? t({ en: `${c.items.length} dishes · from $${from}`, ko: `${c.items.length}가지 · $${from}부터` }) : t({ en: `${c.items.length} dishes`, ko: `${c.items.length}가지` })}
+          {from ? t({ en: `${count} dishes · from $${from}`, ko: `${count}가지 · $${from}부터` }) : t({ en: `${count} dishes`, ko: `${count}가지` })}
           <ArrowRight className="h-4 w-4" />
         </span>
       </span>
@@ -222,6 +264,18 @@ function MenuRow({ item }: { item: MenuItem }) {
           ))}
         </ul>
       )}
+      {item.choices?.map((c) => (
+        <div key={c.label.en} className="mt-3">
+          <p className="text-[0.78rem] font-semibold tracking-[0.14em] text-ink/50 uppercase">{t(c.label)}</p>
+          <ul className="mt-1.5 flex flex-wrap gap-1.5">
+            {c.options.map((o) => (
+              <li key={o.en} className="rounded-lg border border-ink/15 bg-cream px-2.5 py-1 text-[0.9rem] text-ink/80">
+                {t(o)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
       {item.tags && item.tags.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-2">
           {item.tags.map((tag) => {
@@ -237,6 +291,57 @@ function MenuRow({ item }: { item: MenuItem }) {
           })}
         </div>
       )}
+    </div>
+  )
+}
+
+/** The lunch special: one card per fixed price, listing every dish at that price. */
+function LunchTiers({ tiers }: { tiers: LunchTier[] }) {
+  const { lang } = useLang()
+  return (
+    <ul className="grid items-start gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5 lg:pt-8">
+      {tiers.map((tier, i) => (
+        <motion.li
+          key={tier.price}
+          className="rounded-[22px] border border-ink/12 bg-cream p-6 md:p-7"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.05 + i * 0.06, ease: EASE_OUT }}
+        >
+          <p className="font-display text-[2.5rem] leading-none font-[560] text-gold-deep tabular-nums">{tier.price}</p>
+          <ul className="mt-5 space-y-3.5 border-t border-ink/10 pt-5">
+            {tier.items.map((d) => (
+              <li key={d.ko}>
+                <span className={`block text-[1.15rem] leading-snug font-bold ${lang === 'ko' ? 'font-batang' : 'font-display font-[560]'}`}>{lang === 'ko' ? d.ko : d.en}</span>
+                <span className={`block text-[0.92rem] text-ink/55 ${lang === 'ko' ? 'font-display italic' : 'font-batang'}`}>{lang === 'ko' ? d.en : d.ko}</span>
+              </li>
+            ))}
+          </ul>
+        </motion.li>
+      ))}
+    </ul>
+  )
+}
+
+/** Add-ons (extra noodles, rice, sauces, drinks) as a compact price list. */
+function Extras({ extras }: { extras: Extra[] }) {
+  const t = useT()
+  const { lang } = useLang()
+  return (
+    <div className="mt-8 rounded-[22px] border border-ink/12 bg-cream/70 p-6 md:mt-10 md:p-8">
+      <p className="eyebrow text-muted-ink">{t({ en: 'Extras', ko: '추가 메뉴' })}</p>
+      <ul className="mt-4 grid gap-x-14 gap-y-3 lg:grid-cols-2">
+        {extras.map((x) => (
+          <li key={x.ko} className="flex items-baseline gap-3 text-[1.05rem]">
+            <span className="min-w-0">
+              <span className={`font-semibold ${lang === 'ko' ? 'font-batang' : ''}`}>{lang === 'ko' ? x.ko : x.en}</span>{' '}
+              <span className={`text-[0.9rem] text-ink/50 ${lang === 'ko' ? 'italic' : 'font-batang'}`}>{lang === 'ko' ? x.en : x.ko}</span>
+            </span>
+            <span className="mb-1.5 h-px min-w-6 flex-1 self-end border-b border-dotted border-ink/30" aria-hidden="true" />
+            <span className="font-semibold whitespace-nowrap tabular-nums">{x.price}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

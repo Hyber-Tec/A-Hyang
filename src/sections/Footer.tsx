@@ -81,8 +81,8 @@ export function Footer() {
             <p className="eyebrow text-muted">{t({ en: 'A-Hyang', ko: '애향' })}</p>
             <p className="mt-4 max-w-xs leading-relaxed text-paper/80">
               {t({
-                en: 'A family-run Korean kitchen in Duluth, Georgia since 2012 — giant donkatsu, bubbling hot pots and ice-cold naengmyeon.',
-                ko: '2012년부터 조지아 둘루스를 지켜온 가족 한식당. 왕돈까스, 보글보글 전골, 시원한 냉면.',
+                en: 'A family-run Korean kitchen in Nukoa Plaza, Duluth — King-size donkatsu, cold noodles and bubbling stews.',
+                ko: '둘루스 뉴코아 플라자의 가족 한식당. 왕돈까스, 시원한 냉면, 보글보글 끓는 뚝배기.',
               })}
             </p>
           </div>
